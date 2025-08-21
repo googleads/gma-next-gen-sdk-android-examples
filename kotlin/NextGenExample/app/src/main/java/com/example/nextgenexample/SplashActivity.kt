@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import com.example.nextgenexample.appopen.AppOpenAdManager
-import com.example.nextgenexample.appopen.AppOpenFragment
 import com.example.nextgenexample.databinding.ActivitySplashBinding
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.common.RequestConfiguration
@@ -79,12 +77,9 @@ class SplashActivity : AppCompatActivity() {
 
   /** Create the countdown timer, which counts down to zero and shows the app open ad. */
   private fun createTimer() {
-    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this@SplashActivity)
-    // Do not show the app open ad by default.
-    val shouldShowAppOpenAd =
-      sharedPrefs.getBoolean(AppOpenFragment.KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, false)
-    // For better usability of this sample, shorten the splash screen timer if an app open ad will
-    // be shown.
+
+    val shouldShowAppOpenAd = AppOpenAdManager.isAppOpenAdEnabled(this)
+
     val timerDurationInSeconds = if (shouldShowAppOpenAd) 5L else 2L
 
     counterTextView = binding.timer
@@ -149,8 +144,8 @@ class SplashActivity : AppCompatActivity() {
       )
 
       if (googleMobileAdsConsentManager.canRequestAds) {
-        // Load an app open ad when Mobile Ads SDK initialization is complete.
-        AppOpenAdManager.loadAd(this@SplashActivity)
+        // Start preloading an app open ad.
+        AppOpenAdManager.startPreloading()
       }
     }
   }

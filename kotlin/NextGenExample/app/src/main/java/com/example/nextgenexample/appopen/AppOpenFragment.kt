@@ -20,20 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import com.example.nextgenexample.AdFragment
 import com.example.nextgenexample.databinding.FragmentAppOpenBinding
 
-/** A simple [Fragment] subclass that loads an app open ad. */
+/** A fragment that demonstrates how to configure app open ads. */
 class AppOpenFragment : AdFragment<FragmentAppOpenBinding>() {
   override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAppOpenBinding
     get() = FragmentAppOpenBinding::inflate
-
-  // SharedPreferences instance.
-  private val sharedPreferences by lazy {
-    PreferenceManager.getDefaultSharedPreferences(requireActivity())
-  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -42,21 +35,17 @@ class AppOpenFragment : AdFragment<FragmentAppOpenBinding>() {
   ): View {
     super.onCreateView(inflater, container, savedInstanceState)
 
-    binding.showAppOpenAdAllStartsSwitch.isChecked =
-      sharedPreferences.getBoolean(KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, false)
+    val context = requireContext()
 
-    binding.showAppOpenAdAllStartsSwitch.setOnCheckedChangeListener { _, isChecked ->
-      sharedPreferences.edit().putBoolean(KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, isChecked).apply()
+    binding.showAppOpenAdSwitch.isChecked =
+      // Set the switch state based on the user's saved preference.
+      AppOpenAdManager.isAppOpenAdEnabled(context)
+
+    binding.showAppOpenAdSwitch.setOnCheckedChangeListener { _, isChecked ->
+      // Save the user's preference when the switch is toggled.
+      AppOpenAdManager.setAppOpenAdEnabled(context, isChecked)
     }
 
     return binding.root
-  }
-
-  companion object {
-    // Sample app open ad unit ID.
-    const val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
-
-    // Constant for SharedPreferences.
-    const val KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS = "show_app_open_ad_on_all_starts"
   }
 }

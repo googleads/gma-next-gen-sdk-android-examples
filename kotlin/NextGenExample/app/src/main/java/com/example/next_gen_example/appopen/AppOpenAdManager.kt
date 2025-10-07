@@ -49,8 +49,6 @@ object AppOpenAdManager {
   /** Keep track of the time an app open ad is loaded to ensure you don't show an expired ad. */
   private var loadTime: Long = 0
 
-  // [START load_ad]
-
   /**
    * Load an ad.
    *
@@ -79,11 +77,9 @@ object AppOpenAdManager {
           isLoadingAd = false
           loadTime = Date().time
           Log.d(Constant.TAG, "App open ad loaded.")
-          // [START_EXCLUDE silent]
           CoroutineScope(Dispatchers.Main).launch {
             Toast.makeText(context, "App open ad loaded.", Toast.LENGTH_SHORT).show()
           }
-          // [END_EXCLUDE]
         }
 
         /**
@@ -94,17 +90,13 @@ object AppOpenAdManager {
         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
           isLoadingAd = false
           Log.w(Constant.TAG, "App open ad failed to load: $loadAdError")
-          // [START_EXCLUDE silent]
           CoroutineScope(Dispatchers.Main).launch {
             Toast.makeText(context, "App open ad failed to load.", Toast.LENGTH_SHORT).show()
           }
-          // [END_EXCLUDE]
         }
       },
     )
   }
-
-  // [END load_ad]
 
   /** Check if ad was loaded more than n hours ago. */
   private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
@@ -120,7 +112,6 @@ object AppOpenAdManager {
     return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
   }
 
-  // [START show_ad]
   /**
    * Show the ad if one isn't already showing.
    *
@@ -146,22 +137,18 @@ object AppOpenAdManager {
       object : AppOpenAdEventCallback {
         override fun onAdShowedFullScreenContent() {
           Log.d(Constant.TAG, "App open ad showed.")
-          // [START_EXCLUDE silent]
           CoroutineScope(Dispatchers.Main).launch {
             Toast.makeText(activity, "App open ad shown.", Toast.LENGTH_SHORT).show()
           }
-          // [END_EXCLUDE]
         }
 
         override fun onAdDismissedFullScreenContent() {
           Log.d(Constant.TAG, "App open ad dismissed.")
           appOpenAd = null
           isShowingAd = false
-          // [START_EXCLUDE silent]
           CoroutineScope(Dispatchers.Main).launch {
             Toast.makeText(activity, "App open ad dismissed.", Toast.LENGTH_SHORT).show()
           }
-          // [END_EXCLUDE]
           onShowAdCompleteListener?.onShowAdComplete()
           loadAd(activity)
         }
@@ -171,11 +158,9 @@ object AppOpenAdManager {
         ) {
           appOpenAd = null
           isShowingAd = false
-          // [START_EXCLUDE silent]
           CoroutineScope(Dispatchers.Main).launch {
             Toast.makeText(activity, "App open ad failed to show.", Toast.LENGTH_SHORT).show()
           }
-          // [END_EXCLUDE]
           Log.w(Constant.TAG, "App open ad failed to show: $fullScreenContentError")
           onShowAdCompleteListener?.onShowAdComplete()
           loadAd(activity)
@@ -193,5 +178,4 @@ object AppOpenAdManager {
     isShowingAd = true
     appOpenAd?.show(activity)
   }
-  // [END show_ad]
 }

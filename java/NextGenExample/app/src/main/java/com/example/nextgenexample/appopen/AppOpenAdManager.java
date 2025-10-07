@@ -59,8 +59,6 @@ public class AppOpenAdManager {
     return instance;
   }
 
-  // [START load_ad]
-
   /**
    * Load an ad.
    *
@@ -84,19 +82,16 @@ public class AppOpenAdManager {
             isLoadingAd = false;
             loadTime = new Date().getTime();
             Log.d(Constant.TAG, "App open ad loaded.");
-            // [START_EXCLUDE silent]
             new Handler(Looper.getMainLooper())
                 .post(
                     () ->
                         Toast.makeText(context, "App open ad loaded.", Toast.LENGTH_SHORT).show());
-            // [END_EXCLUDE]
           }
 
           @Override
           public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
             isLoadingAd = false;
             Log.w(Constant.TAG, "App open ad failed to load: " + loadAdError);
-            // [START_EXCLUDE silent]
             new Handler(Looper.getMainLooper())
                 .post(
                     () ->
@@ -105,14 +100,10 @@ public class AppOpenAdManager {
                                 "App open ad failed to load: " + loadAdError.getCode(),
                                 Toast.LENGTH_SHORT)
                             .show());
-            // [END_EXCLUDE]
           }
         });
   }
 
-  // [END load_ad]
-
-  // [START show_ad]
   /**
    * Show the ad if one isn't already showing.
    *
@@ -144,10 +135,8 @@ public class AppOpenAdManager {
           @Override
           public void onAdShowedFullScreenContent() {
             Log.d(Constant.TAG, "App open ad shown.");
-            // [START_EXCLUDE silent]
             activity.runOnUiThread(
                 () -> Toast.makeText(activity, "App open ad shown.", Toast.LENGTH_SHORT).show());
-            // [END_EXCLUDE]
           }
 
           @Override
@@ -155,11 +144,9 @@ public class AppOpenAdManager {
             Log.d(Constant.TAG, "App open ad dismissed.");
             appOpenAd = null;
             isShowingAd = false;
-            // [START_EXCLUDE silent]
             activity.runOnUiThread(
                 () ->
                     Toast.makeText(activity, "App open ad dismissed.", Toast.LENGTH_SHORT).show());
-            // [END_EXCLUDE]
             if (onShowAdCompleteListener != null) {
               onShowAdCompleteListener.onShowAdComplete();
             }
@@ -172,13 +159,11 @@ public class AppOpenAdManager {
             appOpenAd = null;
             isShowingAd = false;
             Log.w(Constant.TAG, "App open ad failed to show: " + fullScreenContentError);
-            // [START_EXCLUDE silent]
             new Handler(Looper.getMainLooper())
                 .post(
                     () ->
                         Toast.makeText(activity, "App open ad failed to show.", Toast.LENGTH_SHORT)
                             .show());
-            // [END_EXCLUDE]
             if (onShowAdCompleteListener != null) {
               onShowAdCompleteListener.onShowAdComplete();
             }
@@ -199,8 +184,6 @@ public class AppOpenAdManager {
     isShowingAd = true;
     appOpenAd.show(activity);
   }
-
-  // [END show_ad]
 
   /** Check if ad was loaded more than n hours ago. */
   private boolean wasLoadTimeLessThanNHoursAgo(long numHours) {

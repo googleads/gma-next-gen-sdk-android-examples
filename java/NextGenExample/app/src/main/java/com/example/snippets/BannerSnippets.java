@@ -24,6 +24,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd;
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback;
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest;
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
+import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +61,7 @@ final class BannerSnippets {
   // [START load_ad]
   private void loadBannerAd(AdView adView, Activity activity) {
     // Get a BannerAdRequest for a 360 wide anchored adaptive banner ad.
-    AdSize adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, 360);
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360);
     BannerAdRequest adRequest = new BannerAdRequest.Builder(AD_UNIT_ID, adSize).build();
 
     adView.loadAd(
@@ -88,5 +89,63 @@ final class BannerSnippets {
           }
         });
   }
+
   // [END load_ad]
+
+  // [START ad_events]
+  private void loadBannerAdWithAdEvents(AdView adView, Activity activity) {
+    // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360);
+    BannerAdRequest adRequest = new BannerAdRequest.Builder(AD_UNIT_ID, adSize).build();
+
+    adView.loadAd(
+        adRequest,
+        new AdLoadCallback<BannerAd>() {
+          @Override
+          public void onAdLoaded(@NonNull BannerAd bannerAd) {
+            bannerAd.setAdEventCallback(
+                new BannerAdEventCallback() {
+                  @Override
+                  public void onAdImpression() {
+                    // Banner ad recorded an impression.
+                    Log.d(TAG, "Banner ad recorded an impression.");
+                  }
+
+                  @Override
+                  public void onAdClicked() {
+                    // Banner ad recorded a click.
+                    Log.d(TAG, "Banner ad clicked.");
+                  }
+
+                  @Override
+                  public void onAdShowedFullScreenContent() {
+                    // Banner ad showed.
+                    Log.d(TAG, "Banner ad showed full screen content.");
+                  }
+
+                  @Override
+                  public void onAdDismissedFullScreenContent() {
+                    // Banner ad dismissed.
+                    Log.d(TAG, "Banner ad dismissed full screen content.");
+                  }
+
+                  @Override
+                  public void onAdFailedToShowFullScreenContent(
+                      @NonNull FullScreenContentError fullScreenContentError) {
+                    // Banner ad failed to show.
+                    Log.e(
+                        TAG,
+                        "Banner ad failed to show full screen content: " + fullScreenContentError);
+                  }
+                });
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            // Banner ad failed to load.
+            Log.e(TAG, "Banner ad failed to load: " + adError);
+          }
+        });
+  }
+  // [END ad_events]
 }

@@ -58,6 +58,7 @@ class MenuFragment : Fragment() {
         ExampleData(R.string.inline_banner, R.id.action_MenuFragment_to_InlineBannerFragment),
         ExampleData(R.string.interstitial, R.id.action_MenuFragment_to_InterstitialFragment),
         ExampleData(R.string.native_ad, R.id.action_MenuFragment_to_NativeFragment),
+        ExampleData(R.string.compose_native_ad, R.id.action_MenuFragment_to_NativeComposeFragment),
         ExampleData(R.string.preloading, R.id.action_MenuFragment_to_PreloadingFragment),
         ExampleData(
           R.string.full_screen_native,

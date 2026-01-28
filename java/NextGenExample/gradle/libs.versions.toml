@@ -1,5 +1,5 @@
 [versions]
-adsMobileSdk = "0.22.0-beta01"
+adsMobileSdk = "0.23.0-beta01"
 agp = "8.6.1"
 appcompat = "1.7.0"
 # Using lifecycle-process version 2.8.0 or higher may cause a crash on launch, see

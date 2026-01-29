@@ -68,6 +68,7 @@ public final class InterstitialAdSnippets {
           @Override
           public void onAdsExhausted(String preloadId) {
             Log.i(TAG, "Interstitial preload ad " + preloadId + " is not available");
+            // [Important] Don't call ad preloader start() or pollAd() from onAdsExhausted.
           }
 
           @Override

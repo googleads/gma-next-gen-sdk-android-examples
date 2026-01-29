@@ -62,6 +62,7 @@ private class InterstitialAdSnippets {
 
         override fun onAdsExhausted(preloadId: String) {
           Log.i(TAG, "Interstitial preload ad $preloadId is not available")
+          // [Important] Don't call ad preloader start() or pollAd() from onAdsExhausted.
         }
 
         override fun onAdPreloaded(preloadId: String, responseInfo: ResponseInfo) {

@@ -8,7 +8,7 @@ GMA Next-Gen SDK, covering both the Google AdMob and Google Ad Manager.
 
 ## Support
 
-To get developer support, visit the [Mobile Ads SDK
+For developer support, visit the [Mobile Ads SDK
 Support](https://developers.google.com/admob/support) page.
 
 ## Community

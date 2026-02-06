@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import com.example.nextgenexample.appopen.AppOpenAdManager;
+import com.example.nextgenexample.appopen.AppOpenFragment;
 import com.example.nextgenexample.databinding.ActivitySplashBinding;
 import com.google.android.libraries.ads.mobile.sdk.MobileAds;
 import com.google.android.libraries.ads.mobile.sdk.common.RequestConfiguration;
@@ -90,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
     // Do not show the app open ad by default.
     boolean shouldShowAppOpenAd =
-        AppOpenAdManager.getInstance().isAppOpenAdOnColdStartEnabled(this);
+        sharedPrefs.getBoolean(AppOpenFragment.KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, false);
 
     // For better usability of this sample, shorten the splash screen timer if an app open ad will
     // not be shown.
@@ -163,7 +164,7 @@ public class SplashActivity extends AppCompatActivity {
 
               if (googleMobileAdsConsentManager.canRequestAds()) {
                 // Load an app open ad when Mobile Ads SDK initialization is complete.
-                AppOpenAdManager.getInstance().startPreloading();
+                AppOpenAdManager.getInstance().loadAd(SplashActivity.this);
               }
             })
         .start();

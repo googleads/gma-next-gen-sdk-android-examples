@@ -28,6 +28,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 import com.example.nextgenexample.appopen.AppOpenAdManager;
 import com.example.nextgenexample.appopen.AppOpenFragment;
 
@@ -50,7 +51,8 @@ public class MyApplication extends Application
       return;
     }
 
-    // Check if the current activity is an AppOpenFragment.
+    // Show app open ad if the switch to enable app open ads on all starts is on, or if returning
+    // to the AppOpenFragment.
     boolean isAppOpenFragment = false;
     if (currentActivity instanceof FragmentActivity fragmentActivity) {
       FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
@@ -64,9 +66,9 @@ public class MyApplication extends Application
       }
     }
 
-    // Show app open ad on warms starts within the AppOpenFragment or
-    // on cold starts if the switch is enabled.
-    if (isAppOpenFragment || AppOpenAdManager.getInstance().isAppOpenAdOnColdStartEnabled(this)) {
+    if (PreferenceManager.getDefaultSharedPreferences(currentActivity)
+            .getBoolean(AppOpenFragment.KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, false)
+        || isAppOpenFragment) {
       AppOpenAdManager.getInstance().showAdIfAvailable(currentActivity, null);
     }
   }

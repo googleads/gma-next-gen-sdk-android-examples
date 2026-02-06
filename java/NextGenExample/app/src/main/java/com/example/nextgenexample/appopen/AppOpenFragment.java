@@ -30,10 +30,6 @@ public class AppOpenFragment extends AdFragment<FragmentAppOpenBinding> {
   // Default constructor required for fragment instantiation.
   public AppOpenFragment() {}
 
-  // Sample app open ad unit ID.
-  public static String AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921";
-  public static String KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS = "show_app_open_ad_on_all_starts";
-
   @Override
   protected BindingInflater<FragmentAppOpenBinding> getBindingInflater() {
     return FragmentAppOpenBinding::inflate;
@@ -47,15 +43,13 @@ public class AppOpenFragment extends AdFragment<FragmentAppOpenBinding> {
       SharedPreferences sharedPreferences =
           PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-      binding.showAppOpenAdAllStartsSwitch.setChecked(
-          sharedPreferences.getBoolean(KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, false));
+      binding.showAppOpenAdOnColdStartsSwitch.setChecked(
+          AppOpenAdManager.getInstance().isAppOpenAdOnColdStartEnabled(requireContext()));
 
-      binding.showAppOpenAdAllStartsSwitch.setOnCheckedChangeListener(
+      binding.showAppOpenAdOnColdStartsSwitch.setOnCheckedChangeListener(
           (buttonView, isChecked) ->
-              sharedPreferences
-                  .edit()
-                  .putBoolean(KEY_SHOW_APP_OPEN_AD_ON_ALL_STARTS, isChecked)
-                  .apply());
+              AppOpenAdManager.getInstance()
+                  .setAppOpenAdOnColdStartEnabled(requireContext(), isChecked));
     }
   }
 }

@@ -29,7 +29,7 @@
   <string name="ad_manager_custom_targeting" translatable="false">Ad Manager custom targeting</string>
   <!-- Strings used for app open ad fragment -->
   <string name="leave_and_switch_back" translatable="false">Leave and switch back to the app to see the ad</string>
-  <string name="show_app_open_ad_on_all_starts_text" translatable="false">Show app open ad on all cold and warm starts</string>
+  <string name="show_app_open_ad_on_all_starts_text" translatable="false">Show app open ad on all cold starts.</string>
   <!-- Strings used for full-screen ads -->
   <string name="coins">Coins: %1$d</string>
   <string name="game_over">Game over</string>

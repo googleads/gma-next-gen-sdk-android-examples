@@ -21,6 +21,7 @@
   <string name="interstitial" translatable="false">Interstitial ad</string>
   <string name="interstitial_single_load" translatable="false">Interstitial ad (single load)</string>
   <string name="native_ad" translatable="false">Native ad</string>
+  <string name="compose_native_ad" translatable="false">Compose native ad</string>
   <string name="rewarded" translatable="false">Rewarded ad</string>
   <string name="rewarded_single_load" translatable="false">Rewarded ad (single load)</string>
   <string name="rewarded_interstitial" translatable="false">Rewarded interstitial ad</string>

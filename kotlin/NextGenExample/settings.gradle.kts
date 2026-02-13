@@ -14,6 +14,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "next_gen_example"
+rootProject.name = "nextgenexample"
 
 include(":app")

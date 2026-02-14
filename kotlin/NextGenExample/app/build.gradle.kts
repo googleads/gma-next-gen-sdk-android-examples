@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-  namespace = "com.example.next_gen_example"
+  namespace = "com.example.nextgenexample"
   compileSdk = 36
 
   defaultConfig {
-    applicationId = "com.example.next_gen_example"
+    applicationId = "com.example.nextgenexample"
     minSdk = 24
     multiDexEnabled = true
     targetSdk = 36

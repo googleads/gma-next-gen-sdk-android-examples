@@ -17,7 +17,7 @@ package com.example.snippets
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
-import com.example.next_gen_example.databinding.CustomNativeAdBinding
+import com.example.nextgenexample.databinding.CustomNativeAdBinding
 import com.google.android.gms.ads.nativead.NativeAdAssetNames
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.nativead.CustomNativeAd

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.next_gen_example.MainActivity">
+    tools:context="com.example.nextgenexample.MainActivity">
   <item
       android:id="@+id/privacy_settings"
       android:title="@string/privacy_settings"

@@ -87,8 +87,8 @@ class ComposeBannerFragment : AdFragment<FragmentComposeBinding>() {
     // [END banner_screen]
 
     // [START load_ad]
-    // Request an anchored adaptive banner with a width of 360.
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360)
+    // Request an large anchored adaptive banner with a width of 360.
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)
 
     // Load the ad when the screen is active.
     val coroutineScope = rememberCoroutineScope()

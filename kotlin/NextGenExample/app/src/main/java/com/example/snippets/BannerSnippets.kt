@@ -23,6 +23,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
+import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
 /** Kotlin code snippets for the developer guide. */
@@ -52,34 +53,76 @@ private class BannerSnippets {
 
   // [START load_ad]
   private fun loadBannerAd(adView: AdView, activity: Activity) {
-    // Get a BannerAdRequest for a 360 wide anchored adaptive banner ad.
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, 360)
+    // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360)
     val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
 
     adView.loadAd(
       adRequest,
       object : AdLoadCallback<BannerAd> {
         override fun onAdLoaded(ad: BannerAd) {
-          ad.adEventCallback =
-            object : BannerAdEventCallback {
-              override fun onAdImpression() {
-                Log.d(TAG, "Banner ad recorded an impression.")
-              }
-
-              override fun onAdClicked() {
-                Log.d(TAG, "Banner ad clicked.")
-              }
-            }
+          Log.d(TAG, "Banner ad loaded.")
         }
 
         override fun onAdFailedToLoad(adError: LoadAdError) {
-          Log.e(TAG, "Banner ad failed to load: $adError")
+          Log.d(TAG, "Banner ad failed to load: $adError")
         }
       },
     )
   }
 
   // [END load_ad]
+
+  private fun loadBannerAdWithAdEvents(adView: AdView, activity: Activity) {
+    // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360)
+    val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
+
+    adView.loadAd(
+      adRequest,
+      object : AdLoadCallback<BannerAd> {
+        // [START ad_events]
+        override fun onAdLoaded(ad: BannerAd) {
+          ad.adEventCallback =
+            object : BannerAdEventCallback {
+              override fun onAdImpression() {
+                // Banner ad recorded an impression.
+                Log.d(TAG, "Banner ad recorded an impression.")
+              }
+
+              override fun onAdClicked() {
+                // Banner ad recorded a click.
+                Log.d(TAG, "Banner ad clicked.")
+              }
+
+              override fun onAdShowedFullScreenContent() {
+                // Banner ad showed.
+                Log.d(TAG, "Banner ad showed full screen content.")
+              }
+
+              override fun onAdDismissedFullScreenContent() {
+                // Banner ad dismissed.
+                Log.d(TAG, "Banner ad dismissed full screen content.")
+              }
+
+              override fun onAdFailedToShowFullScreenContent(
+                fullScreenContentError: FullScreenContentError
+              ) {
+                // Banner ad failed to show.
+                Log.w(TAG, "Banner ad failed to show full screen content: $fullScreenContentError")
+              }
+            }
+        }
+
+        // [END ad_events]
+
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          // Banner ad failed to load.
+          Log.d(TAG, "Banner ad failed to load: $adError")
+        }
+      },
+    )
+  }
 
   private companion object {
     const val AD_UNIT_ID = "/21775744923/example/api-demo/ad-sizes"

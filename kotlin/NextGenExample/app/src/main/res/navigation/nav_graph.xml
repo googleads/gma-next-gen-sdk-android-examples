@@ -80,6 +80,16 @@
       app:destination="@id/NativeFragment" />
 
   <fragment
+      android:id="@+id/NativeComposeFragment"
+      android:name="com.example.next_gen_example.native.NativeComposeFragment"
+      android:label="@string/compose_native_ad"
+      tools:layout="@layout/fragment_native">
+  </fragment>
+  <action
+      android:id="@+id/action_MenuFragment_to_NativeComposeFragment"
+      app:destination="@id/NativeComposeFragment" />
+
+  <fragment
       android:id="@+id/FullScreenNativeControllerFragment"
       android:name="com.example.next_gen_example.fullscreennative.FullScreenNativeControllerFragment"
       android:label="@string/full_screen_native"

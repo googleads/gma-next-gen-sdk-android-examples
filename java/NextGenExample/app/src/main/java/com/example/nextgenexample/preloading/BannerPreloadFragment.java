@@ -109,8 +109,7 @@ public class BannerPreloadFragment extends AdFragment<FragmentPreloadBinding> {
           }
         };
     // Get the ad size based on the screen width.
-    AdSize adSize =
-        AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), getAdWidth());
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), getAdWidth());
     BannerAdRequest adRequest = new BannerAdRequest.Builder(AD_UNIT_ID, adSize).build();
     PreloadConfiguration preload = new PreloadConfiguration(adRequest);
     BannerAdPreloader.start(AD_UNIT_ID, preload, preloadCallback);

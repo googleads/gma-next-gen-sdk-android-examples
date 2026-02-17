@@ -47,7 +47,7 @@ class BannerFragment : AdFragment<FragmentBannerBinding>() {
     adView = binding.adView
 
     // Get the ad size based on the screen width.
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
 
     // Load an ad.
     loadAd(adSize)

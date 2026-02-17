@@ -77,9 +77,7 @@ public class AdManagerCustomTargetingFragment extends AdFragment<FragmentCustomT
             requireView().getContext(), android.R.layout.simple_spinner_item, sports));
 
     binding.loadAdButton.setOnClickListener(
-        v ->
-            loadAd(
-                AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360)));
+        v -> loadAd(AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)));
   }
 
   private void loadAd(AdSize adSize) {

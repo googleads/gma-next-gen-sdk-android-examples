@@ -68,7 +68,7 @@ public class AdManagerCategoryExclusionFragment
   }
 
   private void loadAd(@Nullable String exclusionKey, AdView adView) {
-    AdSize adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360);
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360);
 
     BannerAdRequest.Builder requestBuilder = new BannerAdRequest.Builder(AD_UNIT_ID, adSize);
 

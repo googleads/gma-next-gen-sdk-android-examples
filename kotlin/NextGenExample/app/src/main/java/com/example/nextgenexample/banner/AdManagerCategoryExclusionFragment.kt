@@ -49,7 +49,7 @@ class AdManagerCategoryExclusionFragment : AdFragment<FragmentCategoryExclusionB
   }
 
   private fun loadAd(exclusionKey: String?, adView: AdView) {
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360)
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)
 
     val adRequest =
       if (exclusionKey != null) {

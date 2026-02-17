@@ -56,8 +56,7 @@ public class BannerFragment extends AdFragment<FragmentBannerBinding> {
     adView = binding.adView;
 
     // Get the ad size based on the screen width.
-    AdSize adSize =
-        AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), getAdWidth());
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), getAdWidth());
 
     // Load an ad.
     loadAd(adSize);

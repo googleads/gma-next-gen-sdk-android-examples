@@ -95,7 +95,7 @@ class BannerPreloadFragment : AdFragment<FragmentPreloadBinding>() {
         }
       }
     // Get the ad size based on the screen width.
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
     val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
     val preload = PreloadConfiguration(adRequest)
     BannerAdPreloader.start(AD_UNIT_ID, preload, preloadCallback)

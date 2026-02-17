@@ -81,7 +81,7 @@ class ComposeLazyBannerFragment : AdFragment<FragmentComposeBinding>() {
     val isPreviewMode = LocalInspectionMode.current
     var isLoadingAds by remember { mutableStateOf(true) }
     var loadedAds by remember { mutableStateOf<List<BannerAd>>(emptyList()) }
-    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360)
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)
 
     // Load the filler content.
     val fillerText: List<String> =

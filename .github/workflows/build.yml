@@ -29,7 +29,7 @@ jobs:
         run: |
           # Determine the commit to compare against.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            BASE="origin/${{ github.base_ref }}"
+            BASE="origin/${GITHUB_BASE_REF}"
           else
             BASE="${{ github.event.before }}"
           fi

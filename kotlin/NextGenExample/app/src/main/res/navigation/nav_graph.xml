@@ -7,14 +7,14 @@
 
   <fragment
       android:id="@+id/MenuFragment"
-      android:name="com.example.next_gen_example.MenuFragment"
+      android:name="com.example.nextgenexample.MenuFragment"
       android:label="@string/menu"
       tools:layout="@layout/fragment_menu">
   </fragment>
 
   <fragment
       android:id="@+id/AppOpenFragment"
-      android:name="com.example.next_gen_example.appopen.AppOpenFragment"
+      android:name="com.example.nextgenexample.appopen.AppOpenFragment"
       android:label="@string/app_open"
       tools:layout="@layout/fragment_menu">
   </fragment>
@@ -24,7 +24,7 @@
 
   <fragment
       android:id="@+id/BannerFragment"
-      android:name="com.example.next_gen_example.banner.BannerFragment"
+      android:name="com.example.nextgenexample.banner.BannerFragment"
       android:label="@string/banner"
       tools:layout="@layout/fragment_menu">
   </fragment>
@@ -33,7 +33,7 @@
       app:destination="@id/BannerFragment" />
 <fragment
       android:id="@+id/CollapsibleBannerFragment"
-      android:name="com.example.next_gen_example.banner.CollapsibleBannerFragment"
+      android:name="com.example.nextgenexample.banner.CollapsibleBannerFragment"
       android:label="@string/collapsible_banner"
       tools:layout="@layout/fragment_menu">
   </fragment>
@@ -43,7 +43,7 @@
 
   <fragment
       android:id="@+id/InlineBannerFragment"
-      android:name="com.example.next_gen_example.inlinebanner.InlineBannerFragment"
+      android:name="com.example.nextgenexample.inlinebanner.InlineBannerFragment"
       android:label="@string/inline_banner"
       tools:layout="@layout/fragment_menu" />
   <action
@@ -51,7 +51,7 @@
       app:destination="@id/InlineBannerFragment" />
   <fragment
       android:id="@+id/CustomNativeFragment"
-      android:name="com.example.next_gen_example.native.CustomNativeFragment"
+      android:name="com.example.nextgenexample.native.CustomNativeFragment"
       android:label="@string/custom_native"
       tools:layout="@layout/fragment_menu">
   </fragment>
@@ -61,7 +61,7 @@
 
   <fragment
       android:id="@+id/InterstitialFragment"
-      android:name="com.example.next_gen_example.interstitial.InterstitialFragment"
+      android:name="com.example.nextgenexample.interstitial.InterstitialFragment"
       android:label="@string/interstitial"
       tools:layout="@layout/fragment_interstitial">
   </fragment>
@@ -71,7 +71,7 @@
 
   <fragment
       android:id="@+id/NativeFragment"
-      android:name="com.example.next_gen_example.native.NativeFragment"
+      android:name="com.example.nextgenexample.native.NativeFragment"
       android:label="@string/native_ad"
       tools:layout="@layout/fragment_native">
   </fragment>
@@ -81,7 +81,7 @@
 
   <fragment
       android:id="@+id/NativeComposeFragment"
-      android:name="com.example.next_gen_example.native.NativeComposeFragment"
+      android:name="com.example.nextgenexample.native.NativeComposeFragment"
       android:label="@string/compose_native_ad"
       tools:layout="@layout/fragment_native">
   </fragment>
@@ -91,7 +91,7 @@
 
   <fragment
       android:id="@+id/FullScreenNativeControllerFragment"
-      android:name="com.example.next_gen_example.fullscreennative.FullScreenNativeControllerFragment"
+      android:name="com.example.nextgenexample.fullscreennative.FullScreenNativeControllerFragment"
       android:label="@string/full_screen_native"
       tools:layout="@layout/fragment_full_screen_native_controller">
   </fragment>
@@ -101,7 +101,7 @@
 
   <fragment
       android:id="@+id/RewardedFragment"
-      android:name="com.example.next_gen_example.rewarded.RewardedFragment"
+      android:name="com.example.nextgenexample.rewarded.RewardedFragment"
       android:label="@string/rewarded"
       tools:layout="@layout/fragment_rewarded">
   </fragment>
@@ -111,7 +111,7 @@
 
   <fragment
       android:id="@+id/RewardedInterstitialFragment"
-      android:name="com.example.next_gen_example.rewardedInterstitial.RewardedInterstitialFragment"
+      android:name="com.example.nextgenexample.rewardedInterstitial.RewardedInterstitialFragment"
       android:label="@string/rewarded_interstitial"
       tools:layout="@layout/fragment_rewarded_interstitial">
   </fragment>
@@ -121,7 +121,7 @@
 
   <fragment
       android:id="@+id/IconAdFragment"
-      android:name="com.example.next_gen_example.icon.IconAdFragment"
+      android:name="com.example.nextgenexample.icon.IconAdFragment"
       android:label="@string/icon_ad"
       tools:layout="@layout/fragment_icon_ad">
   </fragment>
@@ -131,7 +131,7 @@
 
   <fragment
       android:id="@+id/InAppBrowserFragment"
-      android:name="com.example.next_gen_example.webview.InAppBrowserFragment"
+      android:name="com.example.nextgenexample.webview.InAppBrowserFragment"
       android:label="@string/webview_api_for_ads"
       tools:layout="@layout/fragment_browser" />
   <action
@@ -140,7 +140,7 @@
 
   <fragment
       android:id="@+id/ComposeBannerFragment"
-      android:name="com.example.next_gen_example.banner.ComposeBannerFragment"
+      android:name="com.example.nextgenexample.banner.ComposeBannerFragment"
       android:label="@string/compose_banner"
       tools:layout="@layout/fragment_browser" />
   <action
@@ -149,7 +149,7 @@
 
   <fragment
       android:id="@+id/ComposeLazyBannerFragment"
-      android:name="com.example.next_gen_example.banner.ComposeLazyBannerFragment"
+      android:name="com.example.nextgenexample.banner.ComposeLazyBannerFragment"
       android:label="@string/compose_lazy_banner"
       tools:layout="@layout/fragment_browser" />
   <action
@@ -158,7 +158,7 @@
 
   <fragment
       android:id="@+id/AdManagerCustomTargetingFragment"
-      android:name="com.example.next_gen_example.banner.AdManagerCustomTargetingFragment"
+      android:name="com.example.nextgenexample.banner.AdManagerCustomTargetingFragment"
       android:label="@string/ad_manager_custom_targeting"
       tools:layout="@layout/fragment_browser" />
   <action
@@ -167,7 +167,7 @@
 
   <fragment
       android:id="@+id/preloadingFragment"
-      android:name="com.example.next_gen_example.preloading.PreloadMainFragment"
+      android:name="com.example.nextgenexample.preloading.PreloadMainFragment"
       android:label="@string/preloading"
       tools:layout="@layout/fragment_menu" />
   <action
@@ -176,7 +176,7 @@
 
   <fragment
       android:id="@+id/AdManagerMultipleAdSizesFragment"
-      android:name="com.example.next_gen_example.banner.AdManagerMultipleAdSizesFragment"
+      android:name="com.example.nextgenexample.banner.AdManagerMultipleAdSizesFragment"
       android:label="@string/ad_manager_multiple_ad_sizes"
       tools:layout="@layout/fragment_menu">
   </fragment>
@@ -186,7 +186,7 @@
 
   <fragment
       android:id="@+id/AdManagerCategoryExclusionFragment"
-      android:name="com.example.next_gen_example.banner.AdManagerCategoryExclusionFragment"
+      android:name="com.example.nextgenexample.banner.AdManagerCategoryExclusionFragment"
       android:label="@string/ad_manager_category_exclusion"
     tools:layout="@layout/fragment_menu">
       </fragment>
@@ -196,7 +196,7 @@
 
   <fragment
       android:id="@+id/AdManagerFluidSizeFragment"
-      android:name="com.example.next_gen_example.native.AdManagerFluidSizeFragment"
+      android:name="com.example.nextgenexample.native.AdManagerFluidSizeFragment"
       android:label="@string/ad_manager_fluid_size"
       tools:layout="@layout/fragment_fluid_size">
       </fragment>
@@ -206,7 +206,7 @@
 
   <fragment
       android:id="@+id/InterstitialSingleLoadFragment"
-      android:name="com.example.next_gen_example.interstitial.InterstitialSingleLoadFragment"
+      android:name="com.example.nextgenexample.interstitial.InterstitialSingleLoadFragment"
       android:label="@string/interstitial_single_load"
       tools:layout="@layout/fragment_interstitial">
   </fragment>
@@ -216,7 +216,7 @@
 
   <fragment
       android:id="@+id/RewardedInterstitialSingleLoadFragment"
-      android:name="com.example.next_gen_example.rewardedinterstitial.RewardedInterstitialSingleLoadFragment"
+      android:name="com.example.nextgenexample.rewardedInterstitial.RewardedInterstitialSingleLoadFragment"
       android:label="@string/rewarded_interstitial_single_load"
       tools:layout="@layout/fragment_rewarded_interstitial">
   </fragment>
@@ -226,7 +226,7 @@
 
   <fragment
       android:id="@+id/RewardedSingleLoadFragment"
-      android:name="com.example.next_gen_example.rewarded.RewardedSingleLoadFragment"
+      android:name="com.example.nextgenexample.rewarded.RewardedSingleLoadFragment"
       android:label="@string/rewarded_single_load"
       tools:layout="@layout/fragment_rewarded">
   </fragment>

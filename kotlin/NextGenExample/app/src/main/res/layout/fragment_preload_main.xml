@@ -10,17 +10,17 @@
         android:orientation="vertical">
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/AppOpenPreloadFragment"
-            android:name="com.example.next_gen_example.preloading.AppOpenPreloadFragment"
+            android:name="com.example.nextgenexample.preloading.AppOpenPreloadFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/BannerPreloadFragment"
-            android:name="com.example.next_gen_example.preloading.BannerPreloadFragment"
+            android:name="com.example.nextgenexample.preloading.BannerPreloadFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/NativePreloadFragment"
-            android:name="com.example.next_gen_example.preloading.NativePreloadFragment"
+            android:name="com.example.nextgenexample.preloading.NativePreloadFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

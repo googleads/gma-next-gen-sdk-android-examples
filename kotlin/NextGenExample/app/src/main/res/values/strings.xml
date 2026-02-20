@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">next_gen_example</string>
+  <string name="app_name">nextgenexample</string>
   <string name="privacy_settings">Privacy settings</string>
   <!-- Strings used for splash screen -->
   <string name="splash_activity_image_text" translatable="false">Splash Activity Image</string>

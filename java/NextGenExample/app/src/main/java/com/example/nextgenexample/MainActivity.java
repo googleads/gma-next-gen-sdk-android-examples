@@ -19,6 +19,8 @@ package com.example.nextgenexample;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -26,6 +28,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.nextgenexample.databinding.ActivityMainBinding;
+import com.google.android.libraries.ads.mobile.sdk.MobileAds;
 
 /** An activity showing a list of ad formats. */
 public class MainActivity extends AppCompatActivity {
@@ -60,27 +63,60 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_main, menu);
-    MenuItem privacySettingsItem = menu.findItem(R.id.privacy_settings);
-    privacySettingsItem
-        .setVisible(googleMobileAdsConsentManager.isPrivacyOptionsRequired());
+    getMenuInflater().inflate(R.menu.menu_action, menu);
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.privacy_settings) {
-      // Handle changes to user consent.
-      googleMobileAdsConsentManager.showPrivacyOptionsForm(
-          this,
-          formError -> {
-            if (formError != null) {
-              Toast.makeText(this, formError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-          });
+    if (item.getItemId() != R.id.action_more) {
+      return super.onOptionsItemSelected(item);
+    }
+
+    View anchor = findViewById(item.getItemId());
+    if (anchor == null) {
       return true;
     }
-    return super.onOptionsItemSelected(item);
+
+    PopupMenu popup = new PopupMenu(this, anchor);
+    popup.getMenuInflater().inflate(R.menu.menu_main, popup.getMenu());
+
+    boolean isPrivacyRequired = googleMobileAdsConsentManager.isPrivacyOptionsRequired();
+    popup.getMenu().findItem(R.id.privacy_settings).setVisible(isPrivacyRequired);
+
+    popup.setOnMenuItemClickListener(
+        menuItem -> {
+          int id = menuItem.getItemId();
+
+          if (id == R.id.privacy_settings) {
+            // Handle changes to user consent.
+            googleMobileAdsConsentManager.showPrivacyOptionsForm(
+                this,
+                formError -> {
+                  if (formError != null) {
+                    Toast.makeText(this, formError.getMessage(), Toast.LENGTH_SHORT).show();
+                  }
+                });
+            return true;
+          }
+
+          if (id == R.id.ad_inspector) {
+            MobileAds.openAdInspector(
+                error -> {
+                  if (error != null) {
+                    // Error will be non-null if ad inspector closed due to an error.
+                    runOnUiThread(
+                        () -> Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show());
+                  }
+                });
+            return true;
+          }
+
+          return false;
+        });
+
+    popup.show();
+    return true;
   }
 
   @Override

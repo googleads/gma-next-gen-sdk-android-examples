@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.nextgenexample.MainActivity">
   <item
+      android:id="@+id/ad_inspector"
+      android:title="@string/ad_inspector" />
+  <item
       android:id="@+id/privacy_settings"
       android:title="@string/privacy_settings"
       android:visible="false"/>

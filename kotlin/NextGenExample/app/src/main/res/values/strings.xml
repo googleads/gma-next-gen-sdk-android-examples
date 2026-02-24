@@ -1,5 +1,7 @@
 <resources>
   <string name="app_name">nextgenexample</string>
+  <string name="more_menu" translatable="false">More</string>
+  <string name="ad_inspector">Ad inspector</string>
   <string name="privacy_settings">Privacy settings</string>
   <!-- Strings used for splash screen -->
   <string name="splash_activity_image_text" translatable="false">Splash Activity Image</string>

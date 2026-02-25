@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -128,5 +128,15 @@ public final class InterstitialAdSnippets {
   private boolean isAdAvailable(String adUnitId) {
     return InterstitialAdPreloader.isAdAvailable(adUnitId);
   }
+
   // [END isAdAvailable]
+
+  // [START stop_preload]
+  private void stopPreloading(String adUnitId) {
+    // Stops the preloading and destroys preloaded ads.
+    InterstitialAdPreloader.destroy(adUnitId);
+    // Stops the preloading and destroys all ads.
+    InterstitialAdPreloader.destroyAll();
+  }
+  // [END stop_preload]
 }

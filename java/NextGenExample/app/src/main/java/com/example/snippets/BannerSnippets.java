@@ -22,10 +22,12 @@ import com.google.android.libraries.ads.mobile.sdk.banner.AdSize;
 import com.google.android.libraries.ads.mobile.sdk.banner.AdView;
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd;
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback;
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdPreloader;
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest;
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
+import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -138,4 +140,24 @@ final class BannerSnippets {
           }
         });
   }
+
+  // [START banner_preload_ad]
+  // Called once when your app starts to preload ads in the background.
+  private void startPreloading(Activity activity) {
+    AdSize adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, 320);
+    BannerAdRequest adRequest = new BannerAdRequest.Builder(AD_UNIT_ID, adSize).build();
+    PreloadConfiguration preloadConfig = new PreloadConfiguration(adRequest);
+    BannerAdPreloader.start(AD_UNIT_ID, preloadConfig);
+  }
+
+  // Called from your recycler or scroll view adapter when you need to show an ad.
+  private void pollAd(AdView adView, Activity activity) {
+    BannerAd ad = BannerAdPreloader.pollAd(AD_UNIT_ID);
+
+    if (ad != null) {
+      adView.registerBannerAd(ad, activity);
+    }
+  }
+
+  // [END banner_preload_ad]
 }

@@ -1,0 +1,248 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package com.example.snippets;
+
+import android.app.Activity;
+import android.util.Log;
+import androidx.annotation.NonNull;
+import com.google.android.libraries.ads.mobile.sdk.MobileAds;
+import com.google.android.libraries.ads.mobile.sdk.banner.AdSize;
+import com.google.android.libraries.ads.mobile.sdk.banner.AdView;
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd;
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerSignalRequest;
+import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
+import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
+import com.google.android.libraries.ads.mobile.sdk.common.VideoOptions;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeSignalRequest;
+import com.google.android.libraries.ads.mobile.sdk.signal.Signal;
+import com.google.android.libraries.ads.mobile.sdk.signal.SignalError;
+import com.google.android.libraries.ads.mobile.sdk.signal.SignalGenerationCallback;
+import java.util.List;
+
+/** Java code snippets for the developer guide. */
+public class AdManagerSCARSnippets {
+
+  public void loadNative(Activity activity, String adUnitId) {
+    // [START signal_request_native]
+    // Create a signal request for an ad.
+    // Contact your account manager for your assigned signal type.
+    NativeSignalRequest signalRequest =
+        new NativeSignalRequest.Builder("signal_type_ad_manager_s2s")
+            .setNativeAdTypes(List.of(NativeAd.NativeAdType.NATIVE))
+            .setAdUnitId(adUnitId)
+            .build();
+
+    // Generate and send the signal request.
+    MobileAds.generateSignal(
+        signalRequest,
+        new SignalGenerationCallback() {
+          @Override
+          public void onSuccess(@NonNull Signal signal) {
+            Log.d(TAG, "Signal string: " + signal.getSignalString());
+            // Fetch the ad response using your generated signal.
+            String adResponseString = fetchAdResponseString(signal);
+            renderNative(activity, adResponseString);
+          }
+
+          @Override
+          public void onFailure(@NonNull SignalError error) {
+            Log.e(TAG, "Error generating signal: " + error.getMessage());
+          }
+        });
+    // [END signal_request_native]
+  }
+
+  public void loadBanner(Activity activity, String adUnitId) {
+    // [START signal_request_banner]
+    // Get the adaptive banner size.
+    // Refer to the AdSize class for available ad sizes.
+    AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, 320);
+
+    // Create a signal request for an ad.
+    // Contact your account manager for your assigned signal type.
+    BannerSignalRequest signalRequest =
+        new BannerSignalRequest.Builder("signal_type_ad_manager_s2s")
+            .setAdUnitId(adUnitId)
+            .setAdSize(size)
+            .build();
+
+    // Generate and send the signal request.
+    MobileAds.generateSignal(
+        signalRequest,
+        new SignalGenerationCallback() {
+          @Override
+          public void onSuccess(@NonNull Signal signal) {
+            Log.d(TAG, "Signal string: " + signal.getSignalString());
+            // Fetch the ad response using your generated signal.
+            String adResponseString = fetchAdResponseString(signal);
+            renderBanner(activity, adResponseString);
+          }
+
+          @Override
+          public void onFailure(@NonNull SignalError error) {
+            Log.e(TAG, "Error generating signal: " + error.getMessage());
+          }
+        });
+    // [END signal_request_banner]
+  }
+
+  public void loadNativePlusBanner(Activity activity, String adUnitId) {
+    // [START signal_request_native_plus_banner]
+    // Get the adaptive banner size.
+    // Refer to the AdSize class for available ad sizes.
+    AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, 320);
+
+    // Create a signal request for an ad.
+    // Contact your account manager for your assigned signal type.
+    NativeSignalRequest signalRequest =
+        new NativeSignalRequest.Builder("signal_type_ad_manager_s2s")
+            .setNativeAdTypes(List.of(NativeAd.NativeAdType.NATIVE, NativeAd.NativeAdType.BANNER))
+            .setAdUnitId(adUnitId)
+            .setAdSize(size)
+            .build();
+
+    // Generate and send the signal request.
+    MobileAds.generateSignal(
+        signalRequest,
+        new SignalGenerationCallback() {
+          @Override
+          public void onSuccess(@NonNull Signal signal) {
+            Log.d(TAG, "Signal string: " + signal.getSignalString());
+            // Fetch the ad response using your generated signal.
+            String adResponseString = fetchAdResponseString(signal);
+            renderNativePlusBanner(activity, adResponseString);
+          }
+
+          @Override
+          public void onFailure(@NonNull SignalError error) {
+            Log.e(TAG, "Error generating signal: " + error.getMessage());
+          }
+        });
+    // [END signal_request_native_plus_banner]
+  }
+
+  public void loadNativeWithOptions(Activity activity, String adUnitId) {
+    // [START native_ad_options]
+    VideoOptions videoOptions = new VideoOptions.Builder().setStartMuted(true).build();
+
+    NativeSignalRequest signalRequest =
+        new NativeSignalRequest.Builder("signal_type_ad_manager_s2s")
+            .setNativeAdTypes(List.of(NativeAd.NativeAdType.NATIVE))
+            .setAdUnitId(adUnitId)
+            .setVideoOptions(videoOptions)
+            .build();
+
+    MobileAds.generateSignal(
+        signalRequest,
+        new SignalGenerationCallback() {
+          @Override
+          public void onSuccess(@NonNull Signal signal) {
+            Log.d(TAG, "Signal string: " + signal.getSignalString());
+            // Fetch the ad response using your generated signal.
+            String adResponseString = fetchAdResponseString(signal);
+          }
+
+          @Override
+          public void onFailure(@NonNull SignalError error) {
+            Log.e(TAG, "Error generating signal: " + error.getMessage());
+          }
+        });
+    // [END native_ad_options]
+  }
+
+  // [START fetch_response]
+  // Emulates a request to your ad server.
+  private String fetchAdResponseString(Signal signal) {
+    // This value is generated dynamically at runtime from your ad server.
+    return "Ad response";
+  }
+
+  // [END fetch_response]
+
+  public void renderNative(Activity activity, String adResponseString) {
+    // [START render_native]
+    NativeAdView nativeAdView = new NativeAdView(activity);
+    NativeAdLoader.loadFromAdResponse(
+        adResponseString,
+        new NativeAdLoaderCallback() {
+          @Override
+          public void onNativeAdLoaded(@NonNull NativeAd nativeAd) {
+            Log.d(TAG, "Native ad rendered.");
+            // TODO : Set native ad assets.
+            nativeAdView.registerNativeAd(nativeAd, /* mediaView= */ null);
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.e(TAG, "Error rendering native ad: " + adError.getMessage());
+          }
+        });
+    // [END render_native]
+  }
+
+  public void renderBanner(Activity activity, String adResponseString) {
+    // [START render_banner]
+    AdView adView = new AdView(activity);
+    adView.loadFromAdResponse(
+        adResponseString,
+        new AdLoadCallback<BannerAd>() {
+          @Override
+          public void onAdLoaded(@NonNull BannerAd ad) {
+            Log.d(TAG, "Banner ad rendered.");
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.e(TAG, "Error rendering banner ad: " + adError.getMessage());
+          }
+        });
+    // [END render_banner]
+  }
+
+  public void renderNativePlusBanner(Activity activity, String adResponseString) {
+    // [START render_native_plus_banner]
+    NativeAdLoader.loadFromAdResponse(
+        adResponseString,
+        new NativeAdLoaderCallback() {
+          @Override
+          public void onNativeAdLoaded(@NonNull NativeAd nativeAd) {
+            Log.d(TAG, "Native ad rendered.");
+            // TODO : Set native ad assets and put the native ad view in your view hierarchy.
+            NativeAdView nativeAdView = new NativeAdView(activity);
+            nativeAdView.registerNativeAd(nativeAd, /* mediaView= */ null);
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.e(TAG, "Error rendering native ad: " + adError.getMessage());
+          }
+
+          @Override
+          public void onBannerAdLoaded(@NonNull BannerAd bannerAd) {
+            Log.d(TAG, "Banner ad rendered.");
+            // TODO : Put the AdView in your view hierarchy.
+            AdView adView = new AdView(activity);
+            adView.registerBannerAd(bannerAd, activity);
+          }
+        });
+    // [END render_native_plus_banner]
+  }
+
+  private static final String TAG = "AdManagerSCARSnippets";
+}

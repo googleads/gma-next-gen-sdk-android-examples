@@ -22,6 +22,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd.NativeAdTyp
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader;
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback;
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest;
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,5 +58,11 @@ final class NativeAndBannerSnippets {
       }
     };
   }
+
   // [END native_and_banner_callback]
+  private void registerNativeAdWithoutMediaView(NativeAd nativeAd, NativeAdView nativeAdView) {
+    // [START register_native_ad_null]
+    nativeAdView.registerNativeAd(nativeAd, null);
+    // [END register_native_ad_null]
+  }
 }

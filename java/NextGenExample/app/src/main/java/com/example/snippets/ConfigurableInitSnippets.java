@@ -36,8 +36,7 @@ final class ConfigurableInitSnippets {
   private static final String ADAPTER_JAVA_CLASS_NAME =
       "com.google.ads.mediation.example.ExampleMediationAdapter";
 
-  // Scenario 1A: (Prioritize Ad + with timeout)
-  // Create a config that sets allowed ad unit ids and an init timeout
+  // Create a config that sets allowed ad unit ids and an initialization timeout.
   private AdapterInitializationConfig createAdUnitAdapterInitConfig() {
 
     // [START create_ad_unit_adapter_init_config]
@@ -51,8 +50,7 @@ final class ConfigurableInitSnippets {
     return adapterConfig;
   }
 
-  // Scenario 1B: (Prioritize Ad + with timeout)
-  // Create a config that sets allowed ad formats ids and an init timeout
+  // Create a config that sets allowed ad formats ids and an initialization timeout.
   private AdapterInitializationConfig createAdFormatAdapterInitConfig() {
 
     // [START create_ad_format_adapter_init_config]
@@ -66,14 +64,13 @@ final class ConfigurableInitSnippets {
     return adapterConfig;
   }
 
-  // Scenario 2: (Specifically include selected adapters)
-  // Create a config that setAllowedAdapterClasses and an init timeout
+  // Create a config that setAllowedAdapterClasses and an initialization timeout.
   private AdapterInitializationConfig createIncludeSpecificAdapterInitConfig() {
 
     // [START create_include_adapter_init_config]
     AdapterInitializationConfig adapterConfig =
         new AdapterInitializationConfig.Builder()
-            .setAllowedAdapterClasses(Set.of(""))
+            .setAllowedAdapterClasses(Set.of(ADAPTER_JAVA_CLASS_NAME))
             .setInitializationTimeoutMs(5000)
             .build();
     // [END create_include_adapter_init_config]
@@ -81,8 +78,7 @@ final class ConfigurableInitSnippets {
     return adapterConfig;
   }
 
-  // Scenario 3: (Exclude specific adapters)
-  // Create a config that setExcludedAdapterClasses and an init timeout
+  // Create a config that setExcludedAdapterClasses and an initialization timeout.
   private AdapterInitializationConfig createSpecificExclusionAdapterInitConfig() {
 
     // [START create_exclude_adapter_init_config]
@@ -103,22 +99,22 @@ final class ConfigurableInitSnippets {
       String appId) {
 
     // [START make_adapter_init_config_request]
-    // Add adapter config to an initialization config
     InitializationConfig initConfig =
         new InitializationConfig.Builder(appId)
             .setAdapterInitializationConfig(adapterInitializationConfig)
             .build();
 
-    // Initialize the Next-Gen SDK with a config containing your adapter init settings
+    // Initialize the GMA Next-Gen SDK with a config containing your adapter initialization
+    // settings.
     MobileAds.initialize(
         context,
         initConfig,
         initializationStatus -> {
-          // Make your ad request as soon as adapter initialization completes.
+          // Make your ad request after adapter initialization completes.
           AppOpenAd.load(
               new AdRequest.Builder(adUnitId)
-                  // Important: Set this to guarantee that the ad request
-                  // doesn't wait for any other uninitialized adapters
+                  // Set this to guarantee that the ad request
+                  // doesn't wait for any other uninitialized adapters.
                   .skipUninitializedAdapters()
                   .build(),
               new AdLoadCallback<AppOpenAd>() {
@@ -143,7 +139,8 @@ final class ConfigurableInitSnippets {
   private void performPostLaunchSetup() {
 
     // [START empty_init_config]
-    // Initialize rest of your adapters by providing an empty configuration
+    // Provide initializeAdapters with an empty configuration to initialize
+    // any adapters not initialized with configurable initialization.
     MobileAds.initializeAdapters(new AdapterInitializationConfig.Builder().build());
     // [END empty_init_config]
   }

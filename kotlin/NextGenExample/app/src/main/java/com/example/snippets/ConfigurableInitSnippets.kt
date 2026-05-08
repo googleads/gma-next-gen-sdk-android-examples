@@ -31,8 +31,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalApi::class)
 private class ConfigurableInitSnippets {
 
-  // Scenario 1A: (Prioritize Ad + with timeout)
-  // Create a config that sets allowed ad unit ids and an init timeout
+  // Create a config that sets allowed ad unit ids and an initialization timeout.
   private fun createAdUnitAdapterInitConfig(): AdapterInitializationConfig {
 
     // [START create_ad_unit_adapter_init_config]
@@ -47,8 +46,7 @@ private class ConfigurableInitSnippets {
     return adapterConfig
   }
 
-  // Scenario 1B: (Prioritize Ad + with timeout)
-  // Create a config that sets allowed ad formats ids and an init timeout
+  // Create a config that sets allowed ad formats ids and an initialization timeout.
   private fun createAdFormatAdapterInitConfig(): AdapterInitializationConfig {
 
     // [START create_ad_format_adapter_init_config]
@@ -63,8 +61,7 @@ private class ConfigurableInitSnippets {
     return adapterConfig
   }
 
-  // Scenario 2: (Specifically include selected adapters)
-  // Create a config that setAllowedAdapterClasses and an init timeout
+  // Create a config that setAllowedAdapterClasses and an initialization timeout.
   private fun createIncludeSpecificAdapterInitConfig(): AdapterInitializationConfig {
 
     // [START create_include_adapter_init_config]
@@ -79,8 +76,7 @@ private class ConfigurableInitSnippets {
     return adapterConfig
   }
 
-  // Scenario 3: (Exclude specific adapters)
-  // Create a config that setExcludedAdapterClasses and an init timeout
+  // Create a config that setExcludedAdapterClasses and an initialization timeout.
   private fun createSpecificExclusionAdapterInitConfig(): AdapterInitializationConfig {
 
     // [START create_exclude_adapter_init_config]
@@ -103,23 +99,22 @@ private class ConfigurableInitSnippets {
   ) {
 
     // [START make_adapter_init_config_request]
-
-    // Add adapter config to an initialization config
     val initConfig =
       InitializationConfig.Builder(appId)
         .setAdapterInitializationConfig(adapterInitializationConfig)
         .build()
 
-    // Initialize the Next-Gen SDK with a config containing your adapter init settings
+    // Initialize the GMA Next-Gen SDK with a config containing your adapter initialization
+    // settings.
     val backgroundScope = CoroutineScope(Dispatchers.IO)
     backgroundScope.launch {
       MobileAds.initialize(context = context, initConfig) {
 
-        // Make your ad request as soon as adapter initialization completes.
+        // Make your ad request after adapter initialization completes.
         AppOpenAd.load(
           AdRequest.Builder(adUnitId = adUnitId)
-            // Important: Set this to guarantee that the ad request
-            // doesn't wait for any other uninitialized adapters
+            // Set this to guarantee that the ad request
+            // doesn't wait for any other uninitialized adapters.
             .skipUninitializedAdapters()
             .build(),
           adLoadCallback =
@@ -144,7 +139,8 @@ private class ConfigurableInitSnippets {
 
     // [START empty_init_config]
 
-    // Initialize rest of your adapters by providing an empty configuration
+    // Provide initializeAdapters with an empty configuration to initialize
+    // any adapters not initialized with configurable initialization.
     MobileAds.initializeAdapters(AdapterInitializationConfig.Builder().build())
 
     // [END empty_init_config]

@@ -123,13 +123,17 @@ final class ConfigurableInitSnippets {
                   // TODO: Your ad logic here
                   // ....
 
-                  // Handle necessary, but non time-sensitive tasks after the ad has loaded.
+                  // Execute non-time-sensitive tasks after ad load completes.
                   performPostLaunchSetup();
                 }
 
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError error) {
-                  // TODO: Handle load error
+                  // TODO: Handle load error.
+                  // ....
+
+                  // Ensure non-time-sensitive post-launch tasks execute even if ad load fails.
+                  performPostLaunchSetup();
                 }
               });
         });

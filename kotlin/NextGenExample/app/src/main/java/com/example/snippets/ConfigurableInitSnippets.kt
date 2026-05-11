@@ -21,6 +21,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.AdFormat
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
+import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.initialization.AdapterInitializationConfig
 import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
 import kotlinx.coroutines.CoroutineScope
@@ -124,7 +125,15 @@ private class ConfigurableInitSnippets {
                 // TODO: Your ad logic here
                 // ....
 
-                // Handle necessary, but non time-sensitive tasks after the ad has loaded.
+                // Execute non-time-sensitive tasks after ad load completes.
+                performPostLaunchSetup()
+              }
+
+              override fun onAdFailedToLoad(adError: LoadAdError) {
+                // TODO: Handle load error.
+                // ....
+
+                // Ensure non-time-sensitive post-launch tasks execute even if ad load fails.
                 performPostLaunchSetup()
               }
             },

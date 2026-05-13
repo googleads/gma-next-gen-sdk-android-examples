@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 import com.example.nextgenexample.AdFragment;
 import com.example.nextgenexample.Constant;
 import com.example.nextgenexample.databinding.FragmentIconBinding;
@@ -28,6 +29,7 @@ import com.example.nextgenexample.databinding.IconAdBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement;
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue;
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAd;
@@ -68,15 +70,13 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
       }
   }
 
-  // [START load_ad]
   private void loadIconAd() {
     IconAdRequest request =
         new IconAdRequest.Builder(AD_UNIT_ID)
             // The "AdChoices" badge is rendered at the top right corner of the icon ad
             // if left unspecified.
             .setAdChoicesPlacement(AdChoicesPlacement.BOTTOM_RIGHT)
-            // It is recommended to specify the placement of your icon ad
-            // to help Google optimize your icon ad performance.
+            // Indicate the icon ad placement is in a browser
             .setIconAdPlacement(IconAdPlacement.BROWSER)
             .build();
 
@@ -104,10 +104,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
         });
   }
 
-  // [END load_ad]
-
   private void setAdEventCallback(IconAd iconAd) {
-    // [START ad_events]
     iconAd.setAdEventCallback(
         new IconAdEventCallback() {
           @Override
@@ -141,7 +138,6 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
             // Icon ad estimated to have earned money.
           }
         });
-    // [END ad_events]
   }
 
   private void displayIconAd(IconAd iconAd) {
@@ -152,7 +148,6 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
     getActivity()
         .runOnUiThread(
             () -> {
-              // [START populate_ad]
               IconAdBinding iconAdViewBinding = IconAdBinding.inflate(getLayoutInflater());
               // Add the ad view to the active view hierarchy.
               binding.iconAdContainer.addView(iconAdViewBinding.getRoot());
@@ -163,9 +158,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
               iconAdView.setHeadlineView(iconAdViewBinding.adHeadline);
               iconAdView.setIconView(iconAdViewBinding.adIcon);
               iconAdView.setStarRatingView(iconAdViewBinding.adStars);
-              // [END populate_ad]
 
-              // [START register_ad]
               // Map each asset view property to the corresponding view in your view hierarchy.
               iconAdViewBinding.adCallToAction.setText(iconAd.getCallToAction());
               iconAdViewBinding.adHeadline.setText(iconAd.getHeadline());
@@ -177,7 +170,34 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
 
               // Register the icon ad with the view presenting it.
               iconAdView.registerIconAd(iconAd);
-              // [END register_ad]
             });
+  }
+
+  private void createRequestWithCorrelator() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).setCorrelator("12345").build();
+  }
+
+  @OptIn(markerClass = ExperimentalApi.class)
+  private void createRequestWithPersistence() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).setAdPersistenceEnabled().build();
+  }
+
+  private void loadMultipleIconAds() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).build();
+
+    IconAd.load(
+        request,
+        /* maxNumberOfAds= */ 3,
+        new AdLoadCallback<IconAd>() {
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.w(Constant.TAG, "Icon ad failed to load: " + adError);
+          }
+
+          @Override
+          public void onAdLoaded(@NonNull IconAd ad) {
+            Log.d(Constant.TAG, "Icon ad loaded");
+          }
+        });
   }
 }

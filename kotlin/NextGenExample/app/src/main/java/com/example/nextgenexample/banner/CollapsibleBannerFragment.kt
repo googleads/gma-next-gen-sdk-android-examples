@@ -47,7 +47,7 @@ class CollapsibleBannerFragment : AdFragment<FragmentBannerBinding>() {
 
     adView = binding.adView
 
-    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)
+    val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360)
 
     loadCollapsibleBanner(adSize)
   }

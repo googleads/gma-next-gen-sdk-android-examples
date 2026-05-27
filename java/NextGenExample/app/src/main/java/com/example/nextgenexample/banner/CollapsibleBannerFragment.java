@@ -55,7 +55,7 @@ public class CollapsibleBannerFragment extends AdFragment<FragmentBannerBinding>
     adView = binding.adView;
 
     // 360 is a placeholder value. Replace 360 with your banner container width.
-    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360);
+    AdSize adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), 360);
 
     // Load an ad.
     loadCollapsibleBanner(adSize);

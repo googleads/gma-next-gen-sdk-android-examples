@@ -26,7 +26,7 @@ import com.example.nextgenexample.Constant
 import com.example.nextgenexample.databinding.FragmentIconAdBinding
 import com.example.nextgenexample.databinding.IconAdBinding
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
+import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
@@ -67,7 +67,7 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
 
     IconAd.load(
       request,
-      object : AdLoadCallback<IconAd> {
+      object : IconAdLoadCallback {
         override fun onAdFailedToLoad(adError: LoadAdError) {
           Log.w(Constant.TAG, "Icon ad failed to load: $adError")
           showToast("Icon ad failed to load.")

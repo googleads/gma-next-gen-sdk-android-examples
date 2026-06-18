@@ -109,6 +109,15 @@ private class InterstitialAdSnippets {
 
   // [END pollAndShowAd]
 
+  // [START peek_ad]
+  private fun peekAdResponseInfo(preloadId: String) {
+    InterstitialAdPreloader.peekAdResponseInfo(preloadId)?.let {
+      Log.d(TAG, "Peeked ad response ID: ${it.responseId}")
+    }
+  }
+
+  // [END peek_ad]
+
   // [START isAdAvailable]
   private fun isAdAvailable(adUnitId: String): Boolean {
     return InterstitialAdPreloader.isAdAvailable(adUnitId)

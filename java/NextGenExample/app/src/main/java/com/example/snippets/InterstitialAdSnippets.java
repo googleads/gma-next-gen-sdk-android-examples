@@ -124,9 +124,20 @@ public final class InterstitialAdSnippets {
 
   // [END pollAndShowAd]
 
+  // [START peek_ad]
+  private void peekAdResponseInfo(String preloadId) {
+    ResponseInfo responseInfo = InterstitialAdPreloader.peekAdResponseInfo(preloadId);
+    if (responseInfo != null) {
+      Log.d(TAG, "Peeked ad response ID: " + responseInfo.getResponseId());
+    }
+  }
+
+  // [END peek_ad]
+
   // [START isAdAvailable]
   private boolean isAdAvailable(String adUnitId) {
     return InterstitialAdPreloader.isAdAvailable(adUnitId);
   }
+
   // [END isAdAvailable]
 }

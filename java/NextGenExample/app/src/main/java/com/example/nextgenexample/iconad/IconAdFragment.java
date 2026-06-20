@@ -26,7 +26,7 @@ import com.example.nextgenexample.Constant;
 import com.example.nextgenexample.databinding.FragmentIconBinding;
 import com.example.nextgenexample.databinding.IconAdBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement;
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
+import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
@@ -82,7 +82,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
 
     IconAd.load(
         request,
-        new AdLoadCallback<IconAd>() {
+        new IconAdLoadCallback() {
           @Override
           public void onAdFailedToLoad(@NonNull LoadAdError adError) {
             Log.w(Constant.TAG, "Icon ad failed to load :" + adError);

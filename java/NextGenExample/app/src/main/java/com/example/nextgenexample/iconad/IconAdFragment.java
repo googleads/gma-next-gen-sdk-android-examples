@@ -26,12 +26,12 @@ import com.example.nextgenexample.Constant;
 import com.example.nextgenexample.databinding.FragmentIconBinding;
 import com.example.nextgenexample.databinding.IconAdBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement;
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAd;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdEventCallback;
+import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdPlacement;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdRequest;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdView;
@@ -68,21 +68,19 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
       }
   }
 
-  // [START load_ad]
   private void loadIconAd() {
     IconAdRequest request =
         new IconAdRequest.Builder(AD_UNIT_ID)
             // The "AdChoices" badge is rendered at the top right corner of the icon ad
             // if left unspecified.
             .setAdChoicesPlacement(AdChoicesPlacement.BOTTOM_RIGHT)
-            // It is recommended to specify the placement of your icon ad
-            // to help Google optimize your icon ad performance.
+            // Indicate the icon ad placement is in a browser
             .setIconAdPlacement(IconAdPlacement.BROWSER)
             .build();
 
     IconAd.load(
         request,
-        new AdLoadCallback<IconAd>() {
+        new IconAdLoadCallback() {
           @Override
           public void onAdFailedToLoad(@NonNull LoadAdError adError) {
             Log.w(Constant.TAG, "Icon ad failed to load :" + adError);
@@ -95,7 +93,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
 
             // Always call destroy() on ads on removal.
             if (iconAd != null) {
-                iconAd.destroy();
+              iconAd.destroy();
             }
             iconAd = ad;
             setAdEventCallback(ad);
@@ -104,10 +102,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
         });
   }
 
-  // [END load_ad]
-
   private void setAdEventCallback(IconAd iconAd) {
-    // [START ad_events]
     iconAd.setAdEventCallback(
         new IconAdEventCallback() {
           @Override
@@ -141,7 +136,6 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
             // Icon ad estimated to have earned money.
           }
         });
-    // [END ad_events]
   }
 
   private void displayIconAd(IconAd iconAd) {
@@ -152,7 +146,6 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
     getActivity()
         .runOnUiThread(
             () -> {
-              // [START populate_ad]
               IconAdBinding iconAdViewBinding = IconAdBinding.inflate(getLayoutInflater());
               // Add the ad view to the active view hierarchy.
               binding.iconAdContainer.addView(iconAdViewBinding.getRoot());
@@ -163,9 +156,7 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
               iconAdView.setHeadlineView(iconAdViewBinding.adHeadline);
               iconAdView.setIconView(iconAdViewBinding.adIcon);
               iconAdView.setStarRatingView(iconAdViewBinding.adStars);
-              // [END populate_ad]
 
-              // [START register_ad]
               // Map each asset view property to the corresponding view in your view hierarchy.
               iconAdViewBinding.adCallToAction.setText(iconAd.getCallToAction());
               iconAdViewBinding.adHeadline.setText(iconAd.getHeadline());
@@ -177,7 +168,6 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
 
               // Register the icon ad with the view presenting it.
               iconAdView.registerIconAd(iconAd);
-              // [END register_ad]
             });
   }
 }

@@ -26,12 +26,12 @@ import com.example.nextgenexample.Constant
 import com.example.nextgenexample.databinding.FragmentIconAdBinding
 import com.example.nextgenexample.databinding.IconAdBinding
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAd
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdPlacement
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAdRequest
 
@@ -53,21 +53,19 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
     iconAd = null
   }
 
-  // [START load_ad]
   private fun loadIconAd() {
     val request =
       IconAdRequest.Builder(AD_UNIT_ID)
         // The "AdChoices" badge is rendered at the top right corner of the icon ad
         // if left unspecified.
         .setAdChoicesPlacement(AdChoicesPlacement.BOTTOM_RIGHT)
-        // It is recommended to specify the placement of your icon ad
-        // to help Google optimize your icon ad performance.
+        // Indicate the icon ad placement is in a browser
         .setIconAdPlacement(IconAdPlacement.BROWSER)
         .build()
 
     IconAd.load(
       request,
-      object : AdLoadCallback<IconAd> {
+      object : IconAdLoadCallback {
         override fun onAdFailedToLoad(adError: LoadAdError) {
           Log.w(Constant.TAG, "Icon ad failed to load: $adError")
           showToast("Icon ad failed to load.")
@@ -85,10 +83,7 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
     )
   }
 
-  // [END load_ad]
-
   private fun setAdEventCallback(iconAd: IconAd) {
-    // [START ad_events]
     iconAd.adEventCallback =
       object : IconAdEventCallback {
         override fun onAdShowedFullScreenContent() {
@@ -117,12 +112,10 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
           // Icon ad estimated to have earned money.
         }
       }
-    // [END ad_events]
   }
 
   private fun displayIconAd(iconAd: IconAd) {
     activity?.runOnUiThread {
-      // [START populate_ad]
       val iconAdViewBinding = IconAdBinding.inflate(layoutInflater)
       // Add the ad view to the active view hierarchy.
       binding.iconAdContainer.addView(iconAdViewBinding.root)
@@ -133,9 +126,7 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
       iconAdView.headlineView = iconAdViewBinding.adHeadline
       iconAdView.iconView = iconAdViewBinding.adIcon
       iconAdView.starRatingView = iconAdViewBinding.adStars
-      // [END populate_ad]
 
-      // [START register_ad]
       // Map each asset view property to the corresponding view in your view hierarchy.
       iconAdViewBinding.adCallToAction.text = iconAd.callToAction
       iconAdViewBinding.adHeadline.text = iconAd.headline
@@ -148,7 +139,6 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
 
       // Register the icon ad with the view presenting it.
       iconAdView.registerIconAd(iconAd)
-      // [END register_ad]
     }
   }
 

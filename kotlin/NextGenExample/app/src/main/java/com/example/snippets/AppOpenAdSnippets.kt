@@ -1,21 +1,10 @@
-// Copyright 2025 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.example.snippets
 
 import android.app.Activity
 import android.util.Log
+import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAd
+import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAdPreloader
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -23,22 +12,17 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration
 import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
-import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallback
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdPreloader
 
 /** Kotlin code snippets for the developer guide. */
-private class RewardedAdSnippets {
+private class AppOpenAdSnippets {
 
-  private var rewardedAd: RewardedAd? = null
+  private var appOpenAd: AppOpenAd? = null
 
   // [START start_preload]
   private fun startPreloading(adUnitId: String) {
     val adRequest = AdRequest.Builder(adUnitId).build()
     val preloadConfig = PreloadConfiguration(adRequest)
-    RewardedAdPreloader.start(adUnitId, preloadConfig)
+    AppOpenAdPreloader.start(adUnitId, preloadConfig)
   }
 
   // [END start_preload]
@@ -46,9 +30,9 @@ private class RewardedAdSnippets {
   // [START set_buffer_size]
   private fun setBufferSize(adUnitId: String) {
     val adRequest = AdRequest.Builder(adUnitId).build()
-    // Maintain small or default buffer size unless rapid transitions are expected.
+    // Four is the recommended maximum buffer size.
     val preloadConfig = PreloadConfiguration(adRequest, bufferSize = 4)
-    RewardedAdPreloader.start(adUnitId, preloadConfig)
+    AppOpenAdPreloader.start(adUnitId, preloadConfig)
   }
 
   // [END set_buffer_size]
@@ -58,20 +42,20 @@ private class RewardedAdSnippets {
     val preloadCallback =
       object : PreloadCallback {
         override fun onAdFailedToPreload(preloadId: String, adError: LoadAdError) {
-          Log.d(TAG, "Rewarded preload ad $preloadId failed to load with error: ${adError.message}")
+          Log.d(TAG, "App open preload ad $preloadId failed to load with error: ${adError.message}")
         }
 
         override fun onAdsExhausted(preloadId: String) {
-          Log.i(TAG, "Rewarded preload ad $preloadId is not available")
+          Log.i(TAG, "App open preload ad $preloadId is not available")
         }
 
         override fun onAdPreloaded(preloadId: String, responseInfo: ResponseInfo) {
-          Log.i(TAG, "Rewarded preload ad $preloadId is available")
+          Log.i(TAG, "App open preload ad $preloadId is available")
         }
       }
     val adRequest = AdRequest.Builder(adUnitId).build()
     val preloadConfig = PreloadConfiguration(adRequest)
-    RewardedAdPreloader.start(adUnitId, preloadConfig, preloadCallback)
+    AppOpenAdPreloader.start(adUnitId, preloadConfig, preloadCallback)
   }
 
   // [END start_preload_with_callback]
@@ -79,28 +63,28 @@ private class RewardedAdSnippets {
   // [START pollAndShowAd]
   private fun pollAndShowAd(activity: Activity, adUnitId: String) {
     // Polling returns the next available ad and loads another ad in the background.
-    val ad = RewardedAdPreloader.pollAd(adUnitId)
+    val ad = AppOpenAdPreloader.pollAd(adUnitId)
     if (ad == null) {
-      Log.e(TAG, "Rewarded ad is not available.")
+      Log.e(TAG, "App open ad is not available.")
       return
     }
 
     // Interact with the ad object as needed.
-    Log.d(TAG, "Rewarded ad response info: ${ad.getResponseInfo()}")
+    Log.d(TAG, "App open ad response info: ${ad.getResponseInfo()}")
     ad.adEventCallback =
-      object : RewardedAdEventCallback {
+      object : AppOpenAdEventCallback {
         override fun onAdImpression() {
-          Log.d(TAG, "Rewarded ad recorded an impression.")
+          Log.d(TAG, "App open ad recorded an impression.")
         }
       }
-    ad.show(activity) { rewardItem -> Log.d(TAG, "User earned reward: ${rewardItem.amount}") }
+    ad.show(activity)
   }
 
   // [END pollAndShowAd]
 
   private fun peekAdResponseInfo(preloadId: String) {
     // [START peek_ad]
-    val responseInfo = RewardedAdPreloader.peekAdResponseInfo(preloadId)
+    val responseInfo = AppOpenAdPreloader.peekAdResponseInfo(preloadId)
     if (responseInfo == null) {
       Log.e(TAG, "Failed to peek ad response info.")
       return
@@ -112,7 +96,7 @@ private class RewardedAdSnippets {
 
   // [START isAdAvailable]
   private fun isAdAvailable(adUnitId: String): Boolean {
-    return RewardedAdPreloader.isAdAvailable(adUnitId)
+    return AppOpenAdPreloader.isAdAvailable(adUnitId)
   }
 
   // [END isAdAvailable]
@@ -120,7 +104,7 @@ private class RewardedAdSnippets {
   // [START stop_preload]
   private fun stopPreloading(adUnitId: String) {
     // Stops the preloading and destroy preloaded ads.
-    RewardedAdPreloader.destroy(adUnitId)
+    AppOpenAdPreloader.destroy(adUnitId)
   }
 
   // [END stop_preload]
@@ -128,36 +112,36 @@ private class RewardedAdSnippets {
   // [START listen_events]
   private fun listenToAdEvents() {
     // Listen for ad events.
-    val ad = rewardedAd
+    val ad = appOpenAd
     if (ad == null) {
-      Log.e(TAG, "Rewarded ad is not ready yet.")
+      Log.e(TAG, "App open ad is not ready yet.")
       return
     }
 
     ad.adEventCallback =
-      object : RewardedAdEventCallback {
+      object : AppOpenAdEventCallback {
         override fun onAdShowedFullScreenContent() {
-          // Rewarded ad did show.
+          // App open ad did show.
         }
 
         override fun onAdDismissedFullScreenContent() {
-          // Rewarded ad did dismiss.
-          rewardedAd = null
+          // App open ad did dismiss.
+          appOpenAd = null
         }
 
         override fun onAdFailedToShowFullScreenContent(
           fullScreenContentError: FullScreenContentError
         ) {
-          // Rewarded ad failed to show.
-          Log.e(TAG, "Rewarded ad failed to show: ${fullScreenContentError.message}")
+          // App open ad failed to show.
+          Log.e(TAG, "App open ad failed to show: ${fullScreenContentError.message}")
         }
 
         override fun onAdImpression() {
-          // Rewarded ad did record an impression.
+          // App open ad did record an impression.
         }
 
         override fun onAdClicked() {
-          // Rewarded ad did record a click.
+          // App open ad did record a click.
         }
       }
   }
@@ -165,38 +149,29 @@ private class RewardedAdSnippets {
   // [END listen_events]
 
   // [START show_ad]
-  private fun showAd(rewardedAd: RewardedAd, activity: Activity) {
+  private fun showAd(appOpenAd: AppOpenAd, activity: Activity) {
     // Show the ad.
-    rewardedAd.show(
-      activity,
-      object : OnUserEarnedRewardListener {
-        override fun onUserEarnedReward(rewardItem: RewardItem) {
-          // User earned the reward.
-          val rewardAmount = rewardItem.amount
-          val rewardType = rewardItem.type
-        }
-      },
-    )
+    appOpenAd.show(activity)
   }
 
   // [END show_ad]
 
-  private fun loadSingleAd(adUnitId: String) {
+  private fun loadSingleAd(activity: Activity, adUnitId: String) {
     // [START single_load]
 
     // Load ads after you initialize MobileAds.
-    RewardedAd.load(
+    AppOpenAd.load(
       AdRequest.Builder(adUnitId).build(),
-      object : AdLoadCallback<RewardedAd> {
-        override fun onAdLoaded(ad: RewardedAd) {
-          // Rewarded ad loaded.
-          rewardedAd = ad
+      object : AdLoadCallback<AppOpenAd> {
+        override fun onAdLoaded(ad: AppOpenAd) {
+          // App open ad loaded.
+          appOpenAd = ad
         }
 
         override fun onAdFailedToLoad(adError: LoadAdError) {
-          // Rewarded ad failed to load.
-          Log.e(TAG, "Rewarded ad failed to load: ${adError.message}")
-          rewardedAd = null
+          // App open ad failed to load.
+          Log.e(TAG, "App open ad failed to load: ${adError.message}")
+          appOpenAd = null
         }
       },
     )
@@ -204,6 +179,6 @@ private class RewardedAdSnippets {
   }
 
   private companion object {
-    const val TAG = "RewardedAdSnippets"
+    const val TAG = "AppOpenAdSnippets"
   }
 }

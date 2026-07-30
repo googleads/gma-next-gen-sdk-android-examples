@@ -34,7 +34,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration;
 import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import androidx.annotation.NonNull;
 
 /** A [Fragment] subclass that preloads app open ads. */
 public class AppOpenPreloadFragment extends AdFragment<FragmentPreloadBinding> {

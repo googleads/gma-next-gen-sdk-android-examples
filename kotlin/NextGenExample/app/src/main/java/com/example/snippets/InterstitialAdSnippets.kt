@@ -32,15 +32,16 @@ private class InterstitialAdSnippets {
 
   private var interstitialAd: InterstitialAd? = null
 
+  // [START start_preload]
   private fun startPreloading(adUnitId: String) {
-    // [START start_preload]
     // Call start() once after SDK initialization.
     // Preload only one ad unit per format to optimize performance.
     val adRequest = AdRequest.Builder(adUnitId).build()
     val preloadConfig = PreloadConfiguration(adRequest)
     InterstitialAdPreloader.start(adUnitId, preloadConfig)
-    // [END start_preload]
   }
+
+  // [END start_preload]
 
   private fun startPreloadingWithCallback(adUnitId: String) {
     // [START start_preload_with_callback]
@@ -118,14 +119,15 @@ private class InterstitialAdSnippets {
 
   // [END stop_preload]
 
+  // [START set_buffer_size]
   private fun setBufferSize(adUnitId: String) {
-    // [START set_buffer_size]
     val adRequest = AdRequest.Builder(adUnitId).build()
-    // Maintain small or default buffer size unless rapid transitions are expected.
+    // Define a PreloadConfiguration and set the buffer size to 2 preloaded ads.
     val preloadConfig = PreloadConfiguration(adRequest, bufferSize = 2)
     InterstitialAdPreloader.start(adUnitId, preloadConfig)
-    // [END set_buffer_size]
   }
+
+  // [END set_buffer_size]
 
   private fun loadSingleAd(activity: Activity, adUnitId: String) {
     // [START single_load]

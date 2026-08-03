@@ -21,27 +21,25 @@ public final class AppOpenAdSnippets {
   private static final String TAG = "AppOpenAdSnippets";
   private AppOpenAd appOpenAd;
 
-  // [START start_preload]
   private void startPreloading(String adUnitId) {
+    // [START start_preload]
     AdRequest adRequest = new AdRequest.Builder(adUnitId).build();
     PreloadConfiguration preloadConfig = new PreloadConfiguration(adRequest);
     AppOpenAdPreloader.start(adUnitId, preloadConfig);
+    // [END start_preload]
   }
 
-  // [END start_preload]
-
-  // [START set_buffer_size]
   private void setBufferSize(String adUnitId) {
+    // [START set_buffer_size]
     AdRequest adRequest = new AdRequest.Builder(adUnitId).build();
-    // Four is the recommended maximum buffer size.
-    PreloadConfiguration preloadConfig = new PreloadConfiguration(adRequest, 4);
+    // Define a PreloadConfiguration and set the buffer size to 2 preloaded ads.
+    PreloadConfiguration preloadConfig = new PreloadConfiguration(adRequest, 2);
     AppOpenAdPreloader.start(adUnitId, preloadConfig);
+    // [END set_buffer_size]
   }
 
-  // [END set_buffer_size]
-
-  // [START start_preload_with_callback]
   private void startPreloadingWithCallback(String adUnitId) {
+    // [START start_preload_with_callback]
     PreloadCallback preloadCallback =
         new PreloadCallback() {
           @Override
@@ -66,9 +64,8 @@ public final class AppOpenAdSnippets {
     AdRequest adRequest = new AdRequest.Builder(adUnitId).build();
     PreloadConfiguration preloadConfig = new PreloadConfiguration(adRequest);
     AppOpenAdPreloader.start(adUnitId, preloadConfig, preloadCallback);
+    // [END start_preload_with_callback]
   }
-
-  // [END start_preload_with_callback]
 
   // [START pollAndShowAd]
   private void pollAndShowAd(Activity activity, String adUnitId) {

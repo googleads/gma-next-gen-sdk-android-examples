@@ -18,27 +18,25 @@ private class AppOpenAdSnippets {
 
   private var appOpenAd: AppOpenAd? = null
 
-  // [START start_preload]
   private fun startPreloading(adUnitId: String) {
+    // [START start_preload]
     val adRequest = AdRequest.Builder(adUnitId).build()
     val preloadConfig = PreloadConfiguration(adRequest)
     AppOpenAdPreloader.start(adUnitId, preloadConfig)
+    // [END start_preload]
   }
 
-  // [END start_preload]
-
-  // [START set_buffer_size]
   private fun setBufferSize(adUnitId: String) {
+    // [START set_buffer_size]
     val adRequest = AdRequest.Builder(adUnitId).build()
-    // Four is the recommended maximum buffer size.
-    val preloadConfig = PreloadConfiguration(adRequest, bufferSize = 4)
+    // Define a PreloadConfiguration and set the buffer size to 2 preloaded ads.
+    val preloadConfig = PreloadConfiguration(adRequest, bufferSize = 2)
     AppOpenAdPreloader.start(adUnitId, preloadConfig)
+    // [END set_buffer_size]
   }
 
-  // [END set_buffer_size]
-
-  // [START start_preload_with_callback]
   private fun startPreloadingWithCallback(adUnitId: String) {
+    // [START start_preload_with_callback]
     val preloadCallback =
       object : PreloadCallback {
         override fun onAdFailedToPreload(preloadId: String, adError: LoadAdError) {
@@ -56,9 +54,8 @@ private class AppOpenAdSnippets {
     val adRequest = AdRequest.Builder(adUnitId).build()
     val preloadConfig = PreloadConfiguration(adRequest)
     AppOpenAdPreloader.start(adUnitId, preloadConfig, preloadCallback)
+    // [END start_preload_with_callback]
   }
-
-  // [END start_preload_with_callback]
 
   // [START pollAndShowAd]
   private fun pollAndShowAd(activity: Activity, adUnitId: String) {

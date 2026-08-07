@@ -68,6 +68,10 @@ public class MenuFragment extends Fragment {
                     R.id.action_MenuFragment_to_InterstitialSingleLoadFragment));
             add(
                 new ExampleData(
+                    R.string.swipeable_interstitial,
+                    R.id.action_MenuFragment_to_SwipeableInterstitialFragment));
+            add(
+                new ExampleData(
                     R.string.rewarded_single_load,
                     R.id.action_MenuFragment_to_RewardedSingleLoadFragment));
             add(new ExampleData(R.string.native_ad, R.id.action_MenuFragment_to_NativeFragment));

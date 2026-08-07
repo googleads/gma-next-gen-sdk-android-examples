@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF222222">
+
+  <TextView
+      android:id="@+id/instruction_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/swipe_up_for_ad"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:textColor="#FFFFFF"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:orientation="vertical"
+      android:gravity="center_horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/instruction_text">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Requested screen hold duration"
+        android:textColor="#FFFFFF" />
+
+    <RadioGroup
+        android:id="@+id/screen_hold_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+      <RadioButton
+          android:id="@+id/radio_0s"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0s"
+          android:textColor="#FFFFFF"
+          android:buttonTint="#FFFFFF" />
+      <RadioButton
+          android:id="@+id/radio_5s"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:text="5s"
+          android:textColor="#FFFFFF"
+          android:buttonTint="#FFFFFF" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/loaded_hold_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=" "
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/ad_load_state_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/ad_loading"
+        android:textColor="#FFEB3B"
+        android:textStyle="bold" />
+
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

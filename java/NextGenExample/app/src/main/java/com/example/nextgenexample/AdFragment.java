@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 /** A [Fragment] with a self-contained example of an ad's features. */
 public abstract class AdFragment<T extends ViewBinding> extends Fragment {
@@ -59,7 +60,14 @@ public abstract class AdFragment<T extends ViewBinding> extends Fragment {
   protected void showToast(@NonNull final String text) {
     if (getActivity() != null) {
       getActivity()
-          .runOnUiThread(() -> Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show());
+          .runOnUiThread(
+              () -> {
+                if (getView() != null) {
+                  Snackbar.make(getView(), text, Snackbar.LENGTH_SHORT).show();
+                } else {
+                  Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+                }
+              });
     }
   }
 
@@ -71,3 +79,5 @@ public abstract class AdFragment<T extends ViewBinding> extends Fragment {
     activity.runOnUiThread(action);
   }
 }
+
+// CI Kick

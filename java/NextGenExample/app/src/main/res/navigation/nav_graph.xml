@@ -172,6 +172,15 @@
     <action
         android:id="@+id/action_MenuFragment_to_InterstitialSingleLoadFragment"
         app:destination="@id/InterstitialSingleLoadFragment" />
+    <fragment
+        android:id="@+id/SwipeableInterstitialFragment"
+        android:name="com.example.nextgenexample.swipeableinterstitial.SwipeableInterstitialFragment"
+        android:label="@string/swipeable_interstitial"
+        tools:layout="@layout/fragment_swipeable_interstitial">
+    </fragment>
+    <action
+        android:id="@+id/action_MenuFragment_to_SwipeableInterstitialFragment"
+        app:destination="@id/SwipeableInterstitialFragment" />
 
     <fragment
         android:id="@+id/RewardedSingleLoadFragment"

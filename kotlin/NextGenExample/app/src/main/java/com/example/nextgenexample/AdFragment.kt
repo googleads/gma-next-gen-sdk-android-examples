@@ -50,7 +50,9 @@ abstract class AdFragment<T : ViewBinding> : Fragment() {
   }
 
   fun showToast(text: String) {
-    activity?.runOnUiThread { Toast.makeText(context, text, Toast.LENGTH_SHORT).show() }
+    activity?.runOnUiThread {
+      Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    }
   }
 
   fun runOnUiThread(action: Runnable?) {
@@ -58,3 +60,5 @@ abstract class AdFragment<T : ViewBinding> : Fragment() {
     activity.runOnUiThread(action)
   }
 }
+
+// CI Kick

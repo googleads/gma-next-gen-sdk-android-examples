@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,6 +96,10 @@ class MenuFragment : Fragment() {
         ExampleData(
           R.string.interstitial_single_load,
           R.id.action_MenuFragment_to_InterstitialSingleLoadFragment,
+        ),
+        ExampleData(
+          R.string.swipeable_interstitial,
+          R.id.action_MenuFragment_to_SwipeableInterstitialFragment,
         ),
         ExampleData(
           R.string.rewarded_single_load,

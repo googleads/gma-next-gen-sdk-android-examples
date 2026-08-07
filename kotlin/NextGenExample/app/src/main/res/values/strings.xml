@@ -22,6 +22,10 @@
   <string name="inline_banner" translatable="false">Inline banner ad</string>
   <string name="interstitial" translatable="false">Interstitial ad</string>
   <string name="interstitial_single_load" translatable="false">Interstitial ad (single load)</string>
+  <string name="swipeable_interstitial" translatable="false">Swipeable interstitial ad</string>
+  <string name="swipe_up_for_ad" translatable="false">Swipe up to see ad</string>
+  <string name="request_screen_hold" translatable="false">Request 5 second minimum hold time</string>
+  <string name="ad_loading" translatable="false">ad loading...</string>
   <string name="native_ad" translatable="false">Native ad</string>
   <string name="compose_native_ad" translatable="false">Compose native ad</string>
   <string name="rewarded" translatable="false">Rewarded ad</string>

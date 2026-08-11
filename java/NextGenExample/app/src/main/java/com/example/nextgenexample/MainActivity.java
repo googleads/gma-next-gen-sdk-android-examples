@@ -33,6 +33,7 @@ import com.google.android.libraries.ads.mobile.sdk.MobileAds;
 /** An activity showing a list of ad formats. */
 public class MainActivity extends AppCompatActivity {
 
+  private ActivityMainBinding binding;
   private AppBarConfiguration appBarConfiguration;
   private GoogleMobileAdsConsentManager googleMobileAdsConsentManager;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+    binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
     setSupportActionBar(binding.toolbar);
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
       return super.onOptionsItemSelected(item);
     }
 
-    View anchor = findViewById(item.getItemId());
+    View anchor = binding.toolbar.findViewById(item.getItemId());
     if (anchor == null) {
       return true;
     }

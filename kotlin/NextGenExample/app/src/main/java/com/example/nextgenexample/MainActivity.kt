@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     if (item.itemId != R.id.action_more) return super.onOptionsItemSelected(item)
 
     val activity = this
-    findViewById<View>(item.itemId)?.let { anchor ->
+    binding.toolbar.findViewById<View>(item.itemId)?.let { anchor ->
       PopupMenu(activity, anchor).apply {
         menuInflater.inflate(R.menu.menu_main, menu)
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.example.nextgenexample.R
+import com.example.nextgenexample.databinding.CustomVideoControlsBinding
 import com.google.android.libraries.ads.mobile.sdk.common.VideoController
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaContent
 
@@ -24,11 +25,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
   private var isVideoPlaying: Boolean = true
 
   init {
-    val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    inflater.inflate(R.layout.custom_video_controls, this, true)
-    playButton = findViewById(R.id.btn_play)
-    muteButton = findViewById(R.id.btn_mute)
-    controlsView = findViewById(R.id.video_controls)
+    val binding = CustomVideoControlsBinding.inflate(LayoutInflater.from(context), this, true)
+    playButton = binding.btnPlay
+    muteButton = binding.btnMute
+    controlsView = binding.videoControls
     controlsView.visibility = View.GONE
   }
 

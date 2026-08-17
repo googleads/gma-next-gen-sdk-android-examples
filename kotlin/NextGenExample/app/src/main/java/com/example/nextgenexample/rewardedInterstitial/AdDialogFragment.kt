@@ -61,8 +61,6 @@ class AdDialogFragment : DialogFragment() {
       object : CountDownTimer(COUNTDOWN_LENGTH_MILLISECONDS, COUNTDOWN_INTERVAL) {
         override fun onTick(millisUntilFinished: Long) {
           timerMilliseconds = millisUntilFinished
-          // Display countdown start from 5.0 seconds.
-          val textView = dialog?.findViewById(android.R.id.message) as? TextView
           val seconds =
             millisUntilFinished / 1000 +
               if ((millisUntilFinished % 1000).toInt() == 0) {
@@ -70,7 +68,7 @@ class AdDialogFragment : DialogFragment() {
               } else {
                 1
               }
-          textView?.text = getString(R.string.video_starting, seconds)
+          (dialog as? AlertDialog)?.setMessage(getString(R.string.video_starting, seconds))
         }
 
         override fun onFinish() {

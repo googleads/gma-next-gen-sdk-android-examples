@@ -34,6 +34,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.nextgenexample.AdFragment
 import com.example.nextgenexample.R
 import com.example.nextgenexample.databinding.FragmentSwipeableInterstitialBinding
+import com.example.nextgenexample.databinding.ItemSwipeableAdBinding
+import com.example.nextgenexample.databinding.ItemSwipeableContentBinding
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -345,11 +347,11 @@ class SwipeableInterstitialFragment : AdFragment<FragmentSwipeableInterstitialBi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
       val inflater = LayoutInflater.from(parent.context)
       return if (viewType == TYPE_CONTENT) {
-        val view = inflater.inflate(R.layout.item_swipeable_content, parent, false)
-        ContentViewHolder(view)
+        val binding = ItemSwipeableContentBinding.inflate(inflater, parent, false)
+        ContentViewHolder(binding)
       } else {
-        val view = inflater.inflate(R.layout.item_swipeable_ad, parent, false)
-        AdViewHolder(view)
+        val binding = ItemSwipeableAdBinding.inflate(inflater, parent, false)
+        AdViewHolder(binding)
       }
     }
 
@@ -403,14 +405,16 @@ class SwipeableInterstitialFragment : AdFragment<FragmentSwipeableInterstitialBi
 
     override fun getItemCount(): Int = Int.MAX_VALUE
 
-    inner class ContentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-      val screenHoldRadioGroup: RadioGroup = view.findViewById(R.id.screen_hold_radio_group)
-      val loadedHoldTimeLabel: TextView = view.findViewById(R.id.loaded_hold_time_label)
-      val adLoadStateLabel: TextView = view.findViewById(R.id.ad_load_state_label)
+    inner class ContentViewHolder(binding: ItemSwipeableContentBinding) :
+      RecyclerView.ViewHolder(binding.root) {
+      val screenHoldRadioGroup: RadioGroup = binding.screenHoldRadioGroup
+      val loadedHoldTimeLabel: TextView = binding.loadedHoldTimeLabel
+      val adLoadStateLabel: TextView = binding.adLoadStateLabel
     }
 
-    inner class AdViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-      val adContainer: FrameLayout = view.findViewById(R.id.ad_container)
+    inner class AdViewHolder(binding: ItemSwipeableAdBinding) :
+      RecyclerView.ViewHolder(binding.root) {
+      val adContainer: FrameLayout = binding.adContainer
     }
   }
 

@@ -44,7 +44,7 @@ dependencies {
   implementation("androidx.navigation:navigation-ui-ktx:2.8.9")
   implementation("androidx.preference:preference-ktx:1.2.1")
 
-  implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.3.1")
+  implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.4.0")
   implementation("com.google.android.material:material:1.12.0")
 
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")

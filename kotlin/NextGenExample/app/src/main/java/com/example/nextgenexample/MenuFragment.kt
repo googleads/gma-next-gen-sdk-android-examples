@@ -27,6 +27,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.nextgenexample.databinding.FragmentMenuBinding
 
+import com.example.nextgenexample.pictureinpicture.PictureInPictureAdManager
+
 /** A simple [Fragment] subclass as the default destination in the navigation. */
 class MenuFragment : Fragment() {
 
@@ -71,6 +73,10 @@ class MenuFragment : Fragment() {
           R.id.action_MenuFragment_to_RewardedInterstitialFragment,
         ),
         ExampleData(R.string.icon_ad, R.id.action_MenuFragment_to_IconAdFragment),
+        ExampleData(
+          R.string.picture_in_picture,
+          R.id.action_MenuFragment_to_PictureInPictureFragment,
+        ),
         ExampleData(R.string.webview_api_for_ads, R.id.action_MenuFragment_to_InAppBrowserFragment),
         ExampleData(R.string.compose_banner, R.id.action_MenuFragment_to_ComposeBannerFragment),
         ExampleData(
@@ -116,7 +122,11 @@ class MenuFragment : Fragment() {
     binding.listView.adapter =
       ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, examplesTitles)
     binding.listView.setOnItemClickListener { _, _, position, _ ->
-      findNavController().navigate(examples[position].navActionId)
+      val example = examples[position]
+      if (example.navActionId != R.id.action_MenuFragment_to_PictureInPictureFragment) {
+        PictureInPictureAdManager.destroyAd()
+      }
+      findNavController().navigate(example.navActionId)
     }
 
     return binding.root

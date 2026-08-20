@@ -19,6 +19,7 @@
   <string name="preloading" translatable="false">Preloading</string>
   <string name="full_screen_native" translatable="false">Full-screen native ad</string>
   <string name="icon_ad" translatable="false">Icon ad</string>
+  <string name="picture_in_picture" translatable="false">Picture-in-Picture ad</string>
   <string name="inline_banner" translatable="false">Inline banner ad</string>
   <string name="interstitial" translatable="false">Interstitial ad</string>
   <string name="interstitial_single_load" translatable="false">Interstitial ad (single load)</string>
@@ -101,4 +102,11 @@
     <item>Utere Inspectore Praeconiorum ad inquisitiones et responsa praeconiorum corrigenda.</item>
     <item>Habes responsum in hoc exemplo? Fac nos scire in Github!</item>
   </string-array>
+  <!-- Strings used for picture-in-picture ad fragment -->
+  <string name="pip_options_header" translatable="false">PictureInPictureAdOptions</string>
+  <string name="pip_options_description" translatable="false">Applied when showing the ad.</string>
+  <string name="pip_presentation_scope" translatable="false">Presentation scope</string>
+  <string name="pip_initial_position" translatable="false">Position</string>
+  <string name="pip_description" translatable="false">Picture-in-Picture ads display as a draggable floating window that snaps to screen corners and can persist across activities.</string>
+  <string name="hide_ad" translatable="false">Hide ad</string>
 </resources>

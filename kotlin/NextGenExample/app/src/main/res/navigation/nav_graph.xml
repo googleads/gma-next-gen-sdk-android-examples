@@ -130,6 +130,16 @@
       app:destination="@id/IconAdFragment" />
 
   <fragment
+      android:id="@+id/PictureInPictureFragment"
+      android:name="com.example.nextgenexample.pictureinpicture.PictureInPictureFragment"
+      android:label="@string/picture_in_picture"
+      tools:layout="@layout/fragment_picture_in_picture">
+  </fragment>
+  <action
+      android:id="@+id/action_MenuFragment_to_PictureInPictureFragment"
+      app:destination="@id/PictureInPictureFragment" />
+
+  <fragment
       android:id="@+id/InAppBrowserFragment"
       android:name="com.example.nextgenexample.webview.InAppBrowserFragment"
       android:label="@string/webview_api_for_ads"

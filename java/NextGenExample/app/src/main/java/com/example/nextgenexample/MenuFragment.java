@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.example.nextgenexample.databinding.FragmentMenuBinding;
+import com.example.nextgenexample.pictureinpicture.PictureInPictureAdManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -92,6 +93,10 @@ public class MenuFragment extends Fragment {
             add(new ExampleData(R.string.icon_ad, R.id.action_MenuFragment_to_IconFragment));
             add(
                 new ExampleData(
+                    R.string.picture_in_picture,
+                    R.id.action_MenuFragment_to_PictureInPictureFragment));
+            add(
+                new ExampleData(
                     R.string.webview_api_for_ads,
                     R.id.action_MenuFragment_to_InAppBrowserFragment));
             add(
@@ -123,8 +128,12 @@ public class MenuFragment extends Fragment {
 
     binding.listView.setOnItemClickListener(
         (parent, view, position, id) -> {
+          ExampleData example = examples.get(position);
+          if (example.navActionId != R.id.action_MenuFragment_to_PictureInPictureFragment) {
+            PictureInPictureAdManager.destroyAd();
+          }
           NavController navController = Navigation.findNavController(rootView);
-          navController.navigate((int) examples.get(position).navActionId);
+          navController.navigate((int) example.navActionId);
         });
 
     return rootView;

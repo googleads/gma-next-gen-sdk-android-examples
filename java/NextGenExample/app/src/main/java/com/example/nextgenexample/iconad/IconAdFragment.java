@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 import com.example.nextgenexample.AdFragment;
 import com.example.nextgenexample.Constant;
 import com.example.nextgenexample.databinding.FragmentIconBinding;
 import com.example.nextgenexample.databinding.IconAdBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement;
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue;
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError;
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAd;
@@ -169,5 +171,33 @@ public class IconAdFragment extends AdFragment<FragmentIconBinding> {
               // Register the icon ad with the view presenting it.
               iconAdView.registerIconAd(iconAd);
             });
+  }
+
+  private void createRequestWithCorrelator() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).setCorrelator("12345").build();
+  }
+
+  @OptIn(markerClass = ExperimentalApi.class)
+  private void createRequestWithPersistence() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).setAdPersistenceEnabled().build();
+  }
+
+  private void loadMultipleIconAds() {
+    IconAdRequest request = new IconAdRequest.Builder(AD_UNIT_ID).build();
+
+    IconAd.load(
+        request,
+        /* maxNumberOfAds= */ 3,
+        new AdLoadCallback<IconAd>() {
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.w(Constant.TAG, "Icon ad failed to load: " + adError);
+          }
+
+          @Override
+          public void onAdLoaded(@NonNull IconAd ad) {
+            Log.d(Constant.TAG, "Icon ad loaded");
+          }
+        });
   }
 }

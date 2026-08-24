@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.example.nextgenexample.databinding.FragmentIconAdBinding
 import com.example.nextgenexample.databinding.IconAdBinding
 import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesPlacement
 import com.google.android.libraries.ads.mobile.sdk.common.AdValue
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.iconad.IconAd
@@ -140,6 +141,33 @@ class IconAdFragment : AdFragment<FragmentIconAdBinding>() {
       // Register the icon ad with the view presenting it.
       iconAdView.registerIconAd(iconAd)
     }
+  }
+
+  private fun createRequestWithCorrelator() {
+    val request = IconAdRequest.Builder(AD_UNIT_ID).setCorrelator("12345").build()
+  }
+
+  @OptIn(ExperimentalApi::class)
+  private fun createRequestWithPersistence() {
+    val request = IconAdRequest.Builder(AD_UNIT_ID).setAdPersistenceEnabled().build()
+  }
+
+  private fun loadMultipleIconAds() {
+    val request = IconAdRequest.Builder(AD_UNIT_ID).build()
+
+    IconAd.load(
+      request,
+      maxNumberOfAds = 3,
+      object : AdLoadCallback<IconAd> {
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          Log.w(Constant.TAG, "Icon ad failed to load: $adError")
+        }
+
+        override fun onAdLoaded(ad: IconAd) {
+          Log.d(Constant.TAG, "Icon ad loaded")
+        }
+      },
+    )
   }
 
   private companion object {

@@ -49,13 +49,13 @@ public class AdDialogFragment extends DialogFragment {
         new CountDownTimer(COUNTDOWN_LENGTH_MILLISECONDS, 50) {
           @Override
           public void onTick(long millisUntilFinished) {
-            TextView textView =
-                Objects.requireNonNull(getDialog()).findViewById(android.R.id.message);
             int seconds = (int) (millisUntilFinished / 1000);
             if (millisUntilFinished % 1000 != 0) {
               seconds++;
             }
-            textView.setText(getString(R.string.video_starting, seconds));
+            if (getDialog() instanceof AlertDialog alertDialog) {
+              alertDialog.setMessage(getString(R.string.video_starting, seconds));
+            }
           }
 
           @Override

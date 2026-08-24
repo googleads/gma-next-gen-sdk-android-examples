@@ -37,6 +37,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.nextgenexample.AdFragment;
 import com.example.nextgenexample.R;
 import com.example.nextgenexample.databinding.FragmentSwipeableInterstitialBinding;
+import com.example.nextgenexample.databinding.ItemSwipeableAdBinding;
+import com.example.nextgenexample.databinding.ItemSwipeableContentBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback;
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi;
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError;
@@ -426,11 +428,13 @@ public class SwipeableInterstitialFragment
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
       LayoutInflater inflater = LayoutInflater.from(parent.getContext());
       if (viewType == TYPE_CONTENT) {
-        View view = inflater.inflate(R.layout.item_swipeable_content, parent, false);
-        return new ContentViewHolder(view);
+        ItemSwipeableContentBinding binding =
+            ItemSwipeableContentBinding.inflate(inflater, parent, false);
+        return new ContentViewHolder(binding);
       } else {
-        View view = inflater.inflate(R.layout.item_swipeable_ad, parent, false);
-        return new AdViewHolder(view);
+        ItemSwipeableAdBinding binding =
+            ItemSwipeableAdBinding.inflate(inflater, parent, false);
+        return new AdViewHolder(binding);
       }
     }
 
@@ -498,20 +502,20 @@ public class SwipeableInterstitialFragment
       TextView loadedHoldTimeLabel;
       TextView adLoadStateLabel;
 
-      ContentViewHolder(View view) {
-        super(view);
-        screenHoldRadioGroup = view.findViewById(R.id.screen_hold_radio_group);
-        loadedHoldTimeLabel = view.findViewById(R.id.loaded_hold_time_label);
-        adLoadStateLabel = view.findViewById(R.id.ad_load_state_label);
+      ContentViewHolder(ItemSwipeableContentBinding binding) {
+        super(binding.getRoot());
+        screenHoldRadioGroup = binding.screenHoldRadioGroup;
+        loadedHoldTimeLabel = binding.loadedHoldTimeLabel;
+        adLoadStateLabel = binding.adLoadStateLabel;
       }
     }
 
     static class AdViewHolder extends RecyclerView.ViewHolder {
       FrameLayout adContainer;
 
-      AdViewHolder(View view) {
-        super(view);
-        adContainer = view.findViewById(R.id.ad_container);
+      AdViewHolder(ItemSwipeableAdBinding binding) {
+        super(binding.getRoot());
+        adContainer = binding.adContainer;
       }
     }
   }

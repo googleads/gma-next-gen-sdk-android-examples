@@ -21,6 +21,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd.NativeAdTyp
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
 
 /** Kotlin code snippets for the developer guide. */
 private class NativeAndBannerSnippets {
@@ -52,6 +53,12 @@ private class NativeAndBannerSnippets {
   }
 
   // [END native_and_banner_callback]
+
+  private fun registerNativeAdWithoutMediaView(nativeAd: NativeAd, nativeAdView: NativeAdView) {
+    // [START register_native_ad_null]
+    nativeAdView.registerNativeAd(nativeAd, null)
+    // [END register_native_ad_null]
+  }
 
   private companion object {
     const val AD_UNIT_ID = "/21775744923/example/native-and-banner"

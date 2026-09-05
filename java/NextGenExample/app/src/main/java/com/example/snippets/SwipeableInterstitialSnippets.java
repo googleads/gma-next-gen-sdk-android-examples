@@ -35,6 +35,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd;
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd;
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAdEventCallback;
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAdRequest;
+import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialSignalRequest;
 
 /** Code snippets for Swipeable Interstitial Ads in Java. */
 @ExperimentalApi
@@ -67,6 +68,40 @@ public class SwipeableInterstitialSnippets {
   }
 
   // [END swipeable_interstitial_load]
+
+  // [START swipeable_interstitial_load_from_ad_response]
+  public void loadSwipeableInterstitialAdFromAdResponse(String adResponseString) {
+    SwipeableInterstitialAd.loadFromAdResponse(
+        adResponseString,
+        new AdLoadCallback<SwipeableInterstitialAd>() {
+          @Override
+          public void onAdLoaded(@NonNull SwipeableInterstitialAd ad) {
+            swipeableAd = ad;
+            // Handle the ad load success.
+            Log.d(TAG, "Ad loaded.");
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError error) {
+            // Handle the ad load failure.
+            Log.d(TAG, "Ad failed to load: " + error);
+          }
+        });
+  }
+
+  // [END swipeable_interstitial_load_from_ad_response]
+
+  // [START swipeable_interstitial_signal_request]
+  public SwipeableInterstitialSignalRequest createSwipeableInterstitialSignalRequest(
+      String signalType) {
+    return new SwipeableInterstitialSignalRequest.Builder(signalType)
+        .setAdUnitId(AD_UNIT_ID)
+        .setMaxScreenHoldDurationSeconds(5)
+        .enableCustomClickSwipeGesture(NativeAd.SwipeGestureDirection.RIGHT, true)
+        .build();
+  }
+
+  // [END swipeable_interstitial_signal_request]
 
   // [START swipeable_interstitial_options_screen_hold]
   public SwipeableInterstitialAdRequest createSwipeableInterstitialRequestWithScreenHold(

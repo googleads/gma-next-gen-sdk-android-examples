@@ -53,4 +53,15 @@ private class RequestConfigurationSnippets {
     MobileAds.setRequestConfiguration(requestConfiguration)
     // [END set_unspecified_age_treatment]
   }
+
+  private fun setCoarseLocationCollectionEnabled() {
+    // [START set_coarse_location_collection_enabled]
+    val requestConfiguration =
+      RequestConfiguration.Builder()
+        // Disable automatic coarse location fetching by the SDK.
+        .setCoarseLocationCollectionEnabled(false)
+        .build()
+    MobileAds.setRequestConfiguration(requestConfiguration)
+    // [END set_coarse_location_collection_enabled]
+  }
 }

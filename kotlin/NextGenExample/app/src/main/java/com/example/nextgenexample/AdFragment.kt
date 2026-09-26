@@ -30,7 +30,6 @@ abstract class AdFragment<T : ViewBinding> : Fragment() {
   abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> T
 
   private var _binding: T? = null
-  // This property is only valid between onCreateView and onDestroyView.
   val binding
     get() = _binding!!
 

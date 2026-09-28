@@ -34,6 +34,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAdRequest
+import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialSignalRequest
 
 /** Code snippets for swipeable interstitial Ads in Kotlin. */
 @OptIn(ExperimentalApi::class)
@@ -65,6 +66,40 @@ class SwipeableInterstitialSnippets(
   }
 
   // [END swipeable_interstitial_load]
+
+  // [START swipeable_interstitial_load_from_ad_response]
+  fun loadSwipeableInterstitialAdFromAdResponse(adResponseString: String) {
+    SwipeableInterstitialAd.loadFromAdResponse(
+      adResponseString,
+      object : AdLoadCallback<SwipeableInterstitialAd> {
+        override fun onAdLoaded(ad: SwipeableInterstitialAd) {
+          swipeableAd = ad
+          // Handle the ad load success.
+          Log.d(TAG, "Ad loaded.")
+        }
+
+        override fun onAdFailedToLoad(error: LoadAdError) {
+          // Handle the ad load failure.
+          Log.d(TAG, "Ad failed to load: $error")
+        }
+      },
+    )
+  }
+
+  // [END swipeable_interstitial_load_from_ad_response]
+
+  // [START swipeable_interstitial_signal_request]
+  fun createSwipeableInterstitialSignalRequest(
+    signalType: String
+  ): SwipeableInterstitialSignalRequest {
+    return SwipeableInterstitialSignalRequest.Builder(signalType)
+      .setAdUnitId(AD_UNIT_ID)
+      .setMaxScreenHoldDurationSeconds(5)
+      .enableCustomClickSwipeGesture(NativeAd.SwipeGestureDirection.RIGHT, true)
+      .build()
+  }
+
+  // [END swipeable_interstitial_signal_request]
 
   // [START swipeable_interstitial_options_screen_hold]
   fun createSwipeableInterstitialRequestWithScreenHold(

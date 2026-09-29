@@ -53,6 +53,7 @@ import com.example.nextgenexample.Constant
 import com.example.nextgenexample.R
 import com.example.nextgenexample.databinding.FragmentComposeBinding
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
+import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadResult
@@ -109,8 +110,9 @@ class ComposeLazyBannerFragment : AdFragment<FragmentComposeBinding>() {
             Box(modifier = Modifier.fillMaxWidth()) {
               // Display the ad within an AndroidView.
               AndroidView(
-                modifier = modifier.wrapContentSize(),
-                factory = { bannerAd.getView(requireActivity()) },
+                modifier = Modifier.wrapContentSize(),
+                factory = { context -> AdView(context) },
+                update = { adView -> adView.registerBannerAd(bannerAd, requireActivity()) },
               )
             }
             // Display the filler content.
@@ -134,7 +136,7 @@ class ComposeLazyBannerFragment : AdFragment<FragmentComposeBinding>() {
     }
 
     // Clean up the BannerAds after use.
-    DisposableEffect(Unit) { onDispose { loadedAds.forEach { adView -> adView.destroy() } } }
+    DisposableEffect(Unit) { onDispose { loadedAds.forEach { bannerAd -> bannerAd.destroy() } } }
   }
 
   private suspend fun loadBannerAds(count: Int, adSize: AdSize): List<BannerAd> = supervisorScope {

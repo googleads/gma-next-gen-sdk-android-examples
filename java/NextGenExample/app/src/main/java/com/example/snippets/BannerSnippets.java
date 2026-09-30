@@ -15,6 +15,7 @@
 package com.example.snippets;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
@@ -80,6 +81,65 @@ final class BannerSnippets {
   }
 
   // [END load_ad]
+
+  // [START load_inline_adaptive_banner]
+  private void loadInlineAdaptiveBannerAd(@NonNull AdView adView, @NonNull Activity activity) {
+    // Create an inline adaptive ad size. 320 is a placeholder value.
+    // Replace 320 with your banner container width.
+    AdSize adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, 320);
+    BannerAdRequest adRequest = new BannerAdRequest.Builder(AD_UNIT_ID, adSize).build();
+
+    adView.loadAd(
+        adRequest,
+        new AdLoadCallback<BannerAd>() {
+          @Override
+          public void onAdLoaded(@NonNull BannerAd bannerAd) {
+            Log.d(TAG, "Inline adaptive banner ad loaded.");
+          }
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.d(TAG, "Inline adaptive banner ad failed to load: " + adError);
+          }
+        });
+  }
+
+  // [END load_inline_adaptive_banner]
+
+  // [START load_collapsible_banner]
+  private void loadCollapsibleBannerAd(@NonNull AdView adView, @NonNull Activity activity) {
+    AdSize adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360);
+
+    // Create an extra parameter that aligns the bottom of the expanded ad to
+    // the bottom of the adView.
+    Bundle extras = new Bundle();
+    extras.putString("collapsible", "bottom");
+
+    BannerAdRequest adRequest =
+        new BannerAdRequest.Builder(AD_UNIT_ID, adSize).setGoogleExtrasBundle(extras).build();
+
+    adView.loadAd(
+        adRequest,
+        new AdLoadCallback<BannerAd>() {
+          // [START check_collapsibility]
+          @Override
+          public void onAdLoaded(@NonNull BannerAd ad) {
+            Log.i(
+                TAG,
+                String.format(
+                    "The last loaded banner is %scollapsible.", ad.isCollapsible() ? "" : "not "));
+          }
+
+          // [END check_collapsibility]
+
+          @Override
+          public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+            Log.d(TAG, "Banner ad failed to load: " + adError);
+          }
+        });
+  }
+
+  // [END load_collapsible_banner]
 
   private void loadBannerAdWithAdEvents(AdView adView, Activity activity) {
     // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.

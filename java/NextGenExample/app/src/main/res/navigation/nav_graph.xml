@@ -135,6 +135,15 @@
         app:destination="@id/PictureInPictureFragment" />
 
     <fragment
+        android:id="@+id/SqueezebackFragment"
+        android:name="com.example.nextgenexample.squeezeback.SqueezebackFragment"
+        android:label="@string/squeezeback"
+        tools:layout="@layout/fragment_squeezeback" />
+    <action
+        android:id="@+id/action_MenuFragment_to_SqueezebackFragment"
+        app:destination="@id/SqueezebackFragment" />
+
+    <fragment
         android:id="@+id/InAppBrowserFragment"
         android:name="com.example.nextgenexample.webview.InAppBrowserFragment"
         android:label="@string/webview_api_for_ads"

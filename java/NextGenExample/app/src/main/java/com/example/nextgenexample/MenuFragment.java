@@ -97,6 +97,9 @@ public class MenuFragment extends Fragment {
                     R.id.action_MenuFragment_to_PictureInPictureFragment));
             add(
                 new ExampleData(
+                    R.string.squeezeback, R.id.action_MenuFragment_to_SqueezeBackFragment));
+            add(
+                new ExampleData(
                     R.string.webview_api_for_ads,
                     R.id.action_MenuFragment_to_InAppBrowserFragment));
             add(

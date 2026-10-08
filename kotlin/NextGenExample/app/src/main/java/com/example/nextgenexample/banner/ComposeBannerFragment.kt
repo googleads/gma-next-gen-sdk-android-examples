@@ -30,11 +30,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -44,10 +40,11 @@ import com.example.nextgenexample.AdFragment
 import com.example.nextgenexample.Constant
 import com.example.nextgenexample.databinding.FragmentComposeBinding
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
+import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadResult
-import kotlinx.coroutines.launch
+import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
+import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
 /** A [AdFragment] subclass that loads a composable banner ad. */
 class ComposeBannerFragment : AdFragment<FragmentComposeBinding>() {
@@ -68,52 +65,46 @@ class ComposeBannerFragment : AdFragment<FragmentComposeBinding>() {
   fun BannerAdView(modifier: Modifier = Modifier) {
 
     // [START banner_screen]
-    // Initialize required variables.
     val context = LocalContext.current
-    var bannerAdState by remember { mutableStateOf<BannerAd?>(null) }
+    val adView = remember { AdView(context) }
 
     // The AdView is placed at the bottom of the screen.
     Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
-      bannerAdState?.let { bannerAd ->
-        Box(modifier = Modifier.fillMaxWidth()) {
-          // Display the ad within an AndroidView.
-          AndroidView(
-            modifier = modifier.wrapContentSize(),
-            factory = { bannerAd.getView(requireActivity()) },
-          )
-        }
+      Box(modifier = modifier.fillMaxWidth()) {
+        // Display the ad within an AndroidView.
+        AndroidView(modifier = modifier.wrapContentSize(), factory = { adView })
       }
     }
     // [END banner_screen]
 
     // [START load_ad]
-    // Request an large anchored adaptive banner with a width of 360.
-    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(requireContext(), 360)
+    // Request a large anchored adaptive banner with a width of 360.
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, 360)
 
     // Load the ad when the screen is active.
-    val coroutineScope = rememberCoroutineScope()
     val isPreviewMode = LocalInspectionMode.current
-    LaunchedEffect(context) {
-      bannerAdState?.destroy()
+    LaunchedEffect(adSize) {
       if (!isPreviewMode) {
-        coroutineScope.launch {
-          when (val result = BannerAd.load(BannerAdRequest.Builder(AD_UNIT_ID, adSize).build())) {
-            is AdLoadResult.Success -> {
-              bannerAdState = result.ad
+        val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
+        adView.loadAd(
+          adRequest,
+          object : AdLoadCallback<BannerAd> {
+            override fun onAdLoaded(ad: BannerAd) {
+              Log.d(Constant.TAG, "Banner ad loaded.")
             }
-            is AdLoadResult.Failure -> {
-              showToast("Banner failed to load.")
-              Log.w(Constant.TAG, "Banner ad failed to load: $result.error")
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+              Log.w(Constant.TAG, "Banner ad failed to load: $adError")
             }
-          }
-        }
+          },
+        )
       }
     }
     // [END load_ad]
 
     // [START dispose_ad]
     // Destroy the ad when the screen is disposed.
-    DisposableEffect(Unit) { onDispose { bannerAdState?.destroy() } }
+    DisposableEffect(Unit) { onDispose { adView.destroy() } }
     // [END dispose_ad]
   }
 

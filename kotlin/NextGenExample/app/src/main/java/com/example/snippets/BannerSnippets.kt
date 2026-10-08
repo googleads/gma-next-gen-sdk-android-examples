@@ -16,11 +16,13 @@ package com.example.snippets
 
 import android.app.Activity
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
 import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -28,6 +30,8 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
 /** Kotlin code snippets for the developer guide. */
 private class BannerSnippets {
+
+  private var adView: AdView? = null
 
   private fun createCustomAdSize() {
     // [START create_custom_ad_size]
@@ -123,6 +127,56 @@ private class BannerSnippets {
       },
     )
   }
+
+  private fun loadBannerAdWithRefreshCallback(adView: AdView, activity: Activity) {
+    // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360)
+    val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
+
+    // [START ad_refresh]
+    adView.loadAd(
+      adRequest,
+      object : AdLoadCallback<BannerAd> {
+        override fun onAdLoaded(ad: BannerAd) {
+          ad.bannerAdRefreshCallback =
+            object : BannerAdRefreshCallback {
+              override fun onAdRefreshed() {
+                // Banner ad refreshed.
+                Log.d(TAG, "Banner ad refreshed.")
+              }
+
+              override fun onAdFailedToRefresh(adError: LoadAdError) {
+                // Banner ad failed to refresh.
+                Log.w(TAG, "Banner ad failed to refresh: $adError")
+              }
+            }
+        }
+
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          // Banner ad failed to load.
+          Log.w(TAG, "Banner ad failed to load: $adError")
+        }
+      },
+    )
+    // [END ad_refresh]
+  }
+
+  // [START destroy]
+  private fun destroyBanner() {
+    // Remove banner from view hierarchy.
+    val parentView = adView?.parent
+    if (parentView is ViewGroup) {
+      parentView.removeView(adView)
+    }
+
+    // Destroy the banner ad resources.
+    adView?.destroy()
+
+    // Drop reference to the banner ad.
+    adView = null
+  }
+
+  // [END destroy]
 
   private companion object {
     const val AD_UNIT_ID = "/21775744923/example/api-demo/ad-sizes"

@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 package com.example.snippets
 
 import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -76,6 +77,64 @@ private class BannerSnippets {
   }
 
   // [END load_ad]
+
+  // [START load_inline_adaptive_banner]
+  private fun loadInlineAdaptiveBannerAd(adView: AdView, activity: Activity) {
+    // Create an inline adaptive ad size. 320 is a placeholder value.
+    // Replace 320 with your banner container width.
+    val bannerWidth = 320
+    val adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, bannerWidth)
+    val adRequest = BannerAdRequest.Builder(AD_UNIT_ID, adSize).build()
+
+    adView.loadAd(
+      adRequest,
+      object : AdLoadCallback<BannerAd> {
+        override fun onAdLoaded(ad: BannerAd) {
+          Log.d(TAG, "Inline adaptive banner ad loaded.")
+        }
+
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          Log.d(TAG, "Inline adaptive banner ad failed to load: $adError")
+        }
+      },
+    )
+  }
+
+  // [END load_inline_adaptive_banner]
+
+  // [START load_collapsible_banner]
+  private fun loadCollapsibleBannerAd(adView: AdView, activity: Activity) {
+    val adSize = AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, 360)
+
+    // Create an extra parameter that aligns the bottom of the expanded ad to
+    // the bottom of the adView.
+    val extras = Bundle()
+    extras.putString("collapsible", "bottom")
+
+    val adRequest =
+      BannerAdRequest.Builder(AD_UNIT_ID, adSize).setGoogleExtrasBundle(extras).build()
+
+    adView.loadAd(
+      adRequest,
+      object : AdLoadCallback<BannerAd> {
+        // [START check_collapsibility]
+        override fun onAdLoaded(ad: BannerAd) {
+          Log.i(
+            TAG,
+            "The last loaded banner is ${if (ad.isCollapsible()) "" else "not "}collapsible.",
+          )
+        }
+
+        // [END check_collapsibility]
+
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          Log.d(TAG, "Banner ad failed to load: $adError")
+        }
+      },
+    )
+  }
+
+  // [END load_collapsible_banner]
 
   private fun loadBannerAdWithAdEvents(adView: AdView, activity: Activity) {
     // Get a BannerAdRequest for a 360 wide large anchored adaptive banner ad.

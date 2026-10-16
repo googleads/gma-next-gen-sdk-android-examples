@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.nextgenexample.R;
+import com.example.nextgenexample.databinding.CustomVideoControlsBinding;
 import com.google.android.libraries.ads.mobile.sdk.common.VideoController;
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaContent;
 
@@ -40,13 +41,12 @@ public class CustomVideoControlsView extends LinearLayout
   }
 
   private void init(Context context, AttributeSet unusedAttrs, int unusedDefStyle) {
-    LayoutInflater inflater =
-        (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    inflater.inflate(R.layout.custom_video_controls, this, true);
+    CustomVideoControlsBinding binding =
+        CustomVideoControlsBinding.inflate(LayoutInflater.from(context), this, true);
 
-    playButton = findViewById(R.id.btn_play);
-    muteButton = findViewById(R.id.btn_mute);
-    controlsView = findViewById(R.id.video_controls);
+    playButton = binding.btnPlay;
+    muteButton = binding.btnMute;
+    controlsView = binding.videoControls;
     controlsView.setVisibility(View.GONE);
   }
 

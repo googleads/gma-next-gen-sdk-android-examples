@@ -26,7 +26,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.nextgenexample.databinding.FragmentMenuBinding
-
 import com.example.nextgenexample.pictureinpicture.PictureInPictureAdManager
 
 /** A simple [Fragment] subclass as the default destination in the navigation. */
@@ -77,6 +76,7 @@ class MenuFragment : Fragment() {
           R.string.picture_in_picture,
           R.id.action_MenuFragment_to_PictureInPictureFragment,
         ),
+        ExampleData(R.string.squeezeback, R.id.action_MenuFragment_to_SqueezeBackFragment),
         ExampleData(R.string.webview_api_for_ads, R.id.action_MenuFragment_to_InAppBrowserFragment),
         ExampleData(R.string.compose_banner, R.id.action_MenuFragment_to_ComposeBannerFragment),
         ExampleData(

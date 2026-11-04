@@ -108,17 +108,17 @@ class NativePreloadFragment : AdFragment<FragmentPreloadBinding>() {
     val result = NativeAdPreloader.pollAd(AD_UNIT_ID)
 
     if (result is NativeAdSuccess) {
-      // Destroy the previous banner.
+      // Destroy the previous native ad.
       destroyCurrentAd()
       val nativeAd = result.ad
 
       // Interact with the ad object as needed.
       nativeAd.apply {
-        Log.d(TAG, "Banner ad response info: ${nativeAd.getResponseInfo()}")
+        Log.d(TAG, "Native ad response info: ${nativeAd.getResponseInfo()}")
         this.adEventCallback =
           object : NativeAdEventCallback {
             override fun onAdImpression() {
-              Log.d(TAG, "App Open ad recorded an impression.")
+              Log.d(TAG, "Native ad recorded an impression.")
             }
 
             override fun onAdPaid(value: AdValue) {
